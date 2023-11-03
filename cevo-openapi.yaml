@@ -2,14 +2,14 @@
 openapi: 3.0.0
 info:
   title: Centrale-Examens-VO
-  description: '<body><p>OAS3-definities op 21 september 2022 gemaakt n.a.v. het overleg tussen betrokkenen op 20 september en 31 augustus, gebaseerd op de berichtenspecificaties en modellen Centrale Examens VO (CEVO). Ten opzichte van versie 01.01.11 (schooljaar 2021-2022) zijn de wijzigingen n.a.v. de issuelijst Issue 1: FAO-servers toevoegen, Issue 2: Correctoren toevoegen, Issue 3: Naam bij afnamegroep, Issue 6: Administraties opvragen, Issue 9: Afnamegroep bij scores en Issue 12: Terminologie (instellingscode en adminstratienummer). Ten opzichte van versie 01.02.01 zijn de wijzigingen: Maximale lengte voor de tekstvelden naam is 100 (binnen Afnemagroep) en gebruikersnaam is 20 (binnen Examenkandidaat). Verder een aantal correcties, aanvullingen en verbeteringen in de beschrijvingen en wijziging van volgordes zodat de specificaties in de modellen en OAS3-definities optimaal aansluiten.</p></body>'
+  description: "<body><p>OAS3-definities op 1 november 2023 gemaakt n.a.v. het overleg tussen betrokkenen op 1 november, gebaseerd op de berichtenspecificaties en modellen Centrale Examens VO (CEVO) voor schooljaar 2023-2024. Ten opzichte van versie 01.02.03 (schooljaar 2022-2023) zijn de wijzigingen (1) Attribuut examenlokaal bij Planningsgegevens binnen Afnamegroep, (2) Meerdere afnameleiders bij Afnamegroep en (3) Betreffende afnamegroepen in notificatie.</p></body>"
   contact:
     url: https://github.com/edustandaard/Centrale-Examens-VO
   license:
-    name: European Union Public License, version 1.2 (EUPL-1.2)
+    name: "European Union Public License, version 1.2 (EUPL-1.2)"
     url: https://eupl.eu/1.2/nl/
-  version: 01.02.02
-  x-imvertor-generator-version: 1.67.1
+  version: 01.03.01
+  x-imvertor-generator-version: 2.0.0
   x-yamlCompiler-stylesheets-version: "20210605"
 servers:
 - url: https://facet.nl/api/centrale_examens_v1/v02
@@ -31,27 +31,27 @@ paths:
         style: form
         explode: true
         schema:
-          pattern: ^[0-9]{2}[A-Z]{2}$
+          pattern: "^[0-9]{2}[A-Z]{2}$"
           type: string
           example: 99XX
       - name: edu-to
         in: query
-        description: <body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: <body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -124,7 +124,7 @@ paths:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
-                detail: The server understood the request, but is refusing to fulfill it.
+                detail: "The server understood the request, but is refusing to fulfill it."
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
@@ -234,7 +234,7 @@ paths:
                 $ref: '#/components/schemas/Foutbericht'
               example:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4
-                title: Bronservice {bron} is tijdelijk niet beschikbaar.
+                title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
@@ -262,7 +262,7 @@ paths:
         style: form
         explode: true
         schema:
-          pattern: ^[0-9]{2}[A-Z]{2}$
+          pattern: "^[0-9]{2}[A-Z]{2}$"
           type: string
           example: 99XX
       - name: administratienr
@@ -272,27 +272,27 @@ paths:
         style: form
         explode: true
         schema:
-          pattern: ^[0-9]{2}$
+          pattern: "^[0-9]{2}$"
           type: string
           example: "00"
       - name: edu-to
         in: query
-        description: <body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: <body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -365,7 +365,7 @@ paths:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
-                detail: The server understood the request, but is refusing to fulfill it.
+                detail: "The server understood the request, but is refusing to fulfill it."
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
@@ -475,7 +475,7 @@ paths:
                 $ref: '#/components/schemas/Foutbericht'
               example:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4
-                title: Bronservice {bron} is tijdelijk niet beschikbaar.
+                title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
@@ -497,24 +497,24 @@ paths:
       parameters:
       - name: edu-to
         in: query
-        description: <body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
-          example: 0000000700011BB00000
+        example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: <body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
-          example: 0000000700011BB00530
+        example: 0000000700011BB00530
       requestBody:
         content:
           application/json:
@@ -523,10 +523,12 @@ paths:
             examples:
               Voorbeeld Afnamegroep (maximaal):
                 value:
-                  afnameleider: Afnameleider02
-                  corrector1: Corrector01
-                  corrector2: Corrector02
-                  examen: examen20220001
+                  afnameleiderids:
+                  - afnameleider-abc123
+                  - afnameleider-xyz789
+                  corrector1: corrector-abc123
+                  corrector2: corrector-xyz789
+                  examen: examen20240001
                   examenkandidaat:
                   - benodigdeHulpmiddelen:
                     - Verklanking
@@ -540,7 +542,7 @@ paths:
                     - typelabel: ECK-iD
                       waarde: eckid234
                     - typelabel: LAS-key
-                      waarde: laskey234
+                      waarde: laskey-abc123
                     weergavekenmerken:
                       achternaam: Achternaam02
                       voornaam: Voornaam02
@@ -558,7 +560,7 @@ paths:
                     - typelabel: ECK-iD
                       waarde: eckid345
                     - typelabel: LAS-key
-                      waarde: laskey345
+                      waarde: laskey-xyx789
                     weergavekenmerken:
                       achternaam: Achternaam03
                       voornaam: Voornaam03
@@ -569,13 +571,15 @@ paths:
                     instellingscode: 99AA
                     administratienr: "00"
                   planningsgegevens:
-                    afnamemoment: 2021-11-18T07:53:36.544Z
+                    afnamemoment: 2024-05-18T07:53:36.544Z
                     afnamesoort: Offline
                     faoserver: faoserver123
+                    examenlokaal: lok.A.150
               voorbeeld Afnamegroep (minimaal):
                 value:
-                  afnameleider: Afnameleider01
-                  examen: examen20220001
+                  afnameleiderids:
+                  - Afnameleider01
+                  examen: examen20240001
                   examenkandidaat:
                   - geboortedatum: 2001-11-18
                     gebruikersnaam: gebruikersnaam01
@@ -594,7 +598,7 @@ paths:
                     instellingscode: 99AA
                     administratienr: "00"
                   planningsgegevens:
-                    afnamemoment: 2021-11-18T07:53:36.544Z
+                    afnamemoment: 2024-05-18T07:53:36.544Z
                     afnamesoort: Online
       responses:
         "201":
@@ -607,7 +611,7 @@ paths:
               schema:
                 type: string
                 format: uri
-                example: https://api.facet.onl/afnamegroepen/afnamegroep-abc123
+                example: /afnamegroepen/afnamegroep-abc123
             api-version:
               $ref: '#/components/headers/api_version'
             warning:
@@ -666,7 +670,7 @@ paths:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
-                detail: The server understood the request, but is refusing to fulfill it.
+                detail: "The server understood the request, but is refusing to fulfill it."
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
@@ -776,7 +780,7 @@ paths:
                 $ref: '#/components/schemas/Foutbericht'
               example:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4
-                title: Bronservice {bron} is tijdelijk niet beschikbaar.
+                title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
@@ -808,22 +812,22 @@ paths:
           example: afnamegroep-abc123
       - name: edu-to
         in: query
-        description: <body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: <body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -894,7 +898,7 @@ paths:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
-                detail: The server understood the request, but is refusing to fulfill it.
+                detail: "The server understood the request, but is refusing to fulfill it."
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
                 code: autorisation
         "404":
@@ -1020,7 +1024,7 @@ paths:
                 $ref: '#/components/schemas/Foutbericht'
               example:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4
-                title: Bronservice {bron} is tijdelijk niet beschikbaar.
+                title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
@@ -1051,22 +1055,22 @@ paths:
           example: afnamegroep-abc123
       - name: edu-to
         in: query
-        description: <body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\d|\\D){20}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: <body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\d|\\D){20}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -1113,24 +1117,24 @@ paths:
           example: afnamegroep-abc123
       - name: edu-to
         in: query
-        description: <body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
-          example: 0000000700011BB00000
+        example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: <body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
-          example: 0000000700011BB00530
+        example: 0000000700011BB00530
       requestBody:
         content:
           application/json:
@@ -1204,7 +1208,7 @@ paths:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
-                detail: The server understood the request, but is refusing to fulfill it.
+                detail: "The server understood the request, but is refusing to fulfill it."
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
@@ -1314,7 +1318,7 @@ paths:
                 $ref: '#/components/schemas/Foutbericht'
               example:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4
-                title: Bronservice {bron} is tijdelijk niet beschikbaar.
+                title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
@@ -1342,7 +1346,7 @@ paths:
         style: form
         explode: true
         schema:
-          pattern: ^[0-9]{2}[A-Z]{2}$
+          pattern: "^[0-9]{2}[A-Z]{2}$"
           type: string
           example: 99XX
       - name: administratienr
@@ -1352,27 +1356,27 @@ paths:
         style: form
         explode: true
         schema:
-          pattern: ^[0-9]{2}$
+          pattern: "^[0-9]{2}$"
           type: string
           example: "00"
       - name: edu-to
         in: query
-        description: <body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: <body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -1445,7 +1449,7 @@ paths:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
-                detail: The server understood the request, but is refusing to fulfill it.
+                detail: "The server understood the request, but is refusing to fulfill it."
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
@@ -1555,7 +1559,7 @@ paths:
                 $ref: '#/components/schemas/Foutbericht'
               example:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4
-                title: Bronservice {bron} is tijdelijk niet beschikbaar.
+                title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
@@ -1587,22 +1591,22 @@ paths:
           example: afnameleider-abc123
       - name: edu-to
         in: query
-        description: <body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: <body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -1673,7 +1677,7 @@ paths:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
-                detail: The server understood the request, but is refusing to fulfill it.
+                detail: "The server understood the request, but is refusing to fulfill it."
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
                 code: autorisation
         "404":
@@ -1799,7 +1803,7 @@ paths:
                 $ref: '#/components/schemas/Foutbericht'
               example:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4
-                title: Bronservice {bron} is tijdelijk niet beschikbaar.
+                title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
@@ -1827,7 +1831,7 @@ paths:
         style: form
         explode: true
         schema:
-          pattern: ^[0-9]{2}[A-Z]{2}$
+          pattern: "^[0-9]{2}[A-Z]{2}$"
           type: string
           example: 99XX
       - name: administratienr
@@ -1837,7 +1841,7 @@ paths:
         style: form
         explode: true
         schema:
-          pattern: ^[0-9]{2}$
+          pattern: "^[0-9]{2}$"
           type: string
           example: "00"
       - name: examenid
@@ -1851,22 +1855,22 @@ paths:
           example: examen-abc123
       - name: edu-to
         in: query
-        description: <body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: <body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -1939,7 +1943,7 @@ paths:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
-                detail: The server understood the request, but is refusing to fulfill it.
+                detail: "The server understood the request, but is refusing to fulfill it."
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
@@ -2049,7 +2053,7 @@ paths:
                 $ref: '#/components/schemas/Foutbericht'
               example:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4
-                title: Bronservice {bron} is tijdelijk niet beschikbaar.
+                title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
@@ -2081,22 +2085,22 @@ paths:
           example: corrector-abc123
       - name: edu-to
         in: query
-        description: <body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: <body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -2167,7 +2171,7 @@ paths:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
-                detail: The server understood the request, but is refusing to fulfill it.
+                detail: "The server understood the request, but is refusing to fulfill it."
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
                 code: autorisation
         "404":
@@ -2293,7 +2297,7 @@ paths:
                 $ref: '#/components/schemas/Foutbericht'
               example:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4
-                title: Bronservice {bron} is tijdelijk niet beschikbaar.
+                title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
@@ -2316,31 +2320,32 @@ paths:
       parameters:
       - name: examenregime
         in: query
-        description: <body><p>Het specifieke examenregime waarvoor alle examens worden opgevraagd.</p></body><body><p>Jaartal</p></body>
+        description: <body><p>Het specifieke examenregime waarvoor alle examens worden opgevraagd.</p></body><body><p>Waarde is een jaartal in vier cijfers.</p></body>
         required: true
         style: form
         explode: true
         schema:
+          pattern: "^[0-9]{4}$"
           type: string
           example: "2022"
       - name: edu-to
         in: query
-        description: <body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: <body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -2413,7 +2418,7 @@ paths:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
-                detail: The server understood the request, but is refusing to fulfill it.
+                detail: "The server understood the request, but is refusing to fulfill it."
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
@@ -2523,7 +2528,7 @@ paths:
                 $ref: '#/components/schemas/Foutbericht'
               example:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4
-                title: Bronservice {bron} is tijdelijk niet beschikbaar.
+                title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
@@ -2555,22 +2560,22 @@ paths:
           example: examen-abc123
       - name: edu-to
         in: query
-        description: <body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: <body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -2641,7 +2646,7 @@ paths:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
-                detail: The server understood the request, but is refusing to fulfill it.
+                detail: "The server understood the request, but is refusing to fulfill it."
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
                 code: autorisation
         "404":
@@ -2767,7 +2772,7 @@ paths:
                 $ref: '#/components/schemas/Foutbericht'
               example:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4
-                title: Bronservice {bron} is tijdelijk niet beschikbaar.
+                title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
@@ -2796,25 +2801,25 @@ paths:
         explode: false
         schema:
           type: string
-          example: examen-abc123
+          example: examen-abc1233
       - name: edu-to
         in: query
-        description: <body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: <body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -2887,9 +2892,25 @@ paths:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
-                detail: The server understood the request, but is refusing to fulfill it.
+                detail: "The server understood the request, but is refusing to fulfill it."
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
                 code: autorisation
+        "404":
+          description: Not Found
+          headers:
+            api-version:
+              $ref: '#/components/headers/api_version'
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+              example:
+                type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5
+                title: Opgevraagde resource bestaat niet.
+                status: 404
+                detail: The server has not found anything matching the Request-URI.
+                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                code: notFound
         "409":
           description: Conflict
           headers:
@@ -2997,7 +3018,7 @@ paths:
                 $ref: '#/components/schemas/Foutbericht'
               example:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4
-                title: Bronservice {bron} is tijdelijk niet beschikbaar.
+                title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
@@ -3020,31 +3041,32 @@ paths:
       parameters:
       - name: examenregime
         in: query
-        description: <body><p>Het specifieke examenregime waarvoor alle examenvarianten worden opgevraagd.</p></body><body><p>Jaartal</p></body>
+        description: <body><p>Het specifieke examenregime waarvoor alle examenvarianten worden opgevraagd.</p></body><body><p>Waarde is een jaartal in vier cijfers.</p></body>
         required: true
         style: form
         explode: true
         schema:
+          pattern: "^[0-9]{4}$"
           type: string
           example: "2022"
       - name: edu-to
         in: query
-        description: <body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: <body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -3117,7 +3139,7 @@ paths:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
-                detail: The server understood the request, but is refusing to fulfill it.
+                detail: "The server understood the request, but is refusing to fulfill it."
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
@@ -3227,7 +3249,7 @@ paths:
                 $ref: '#/components/schemas/Foutbericht'
               example:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4
-                title: Bronservice {bron} is tijdelijk niet beschikbaar.
+                title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
@@ -3259,22 +3281,22 @@ paths:
           example: examenvariant-abc123
       - name: edu-to
         in: query
-        description: <body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: <body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -3345,7 +3367,7 @@ paths:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
-                detail: The server understood the request, but is refusing to fulfill it.
+                detail: "The server understood the request, but is refusing to fulfill it."
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
                 code: autorisation
         "404":
@@ -3471,7 +3493,7 @@ paths:
                 $ref: '#/components/schemas/Foutbericht'
               example:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4
-                title: Bronservice {bron} is tijdelijk niet beschikbaar.
+                title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
@@ -3499,7 +3521,7 @@ paths:
         style: form
         explode: true
         schema:
-          pattern: ^[0-9]{2}[A-Z]{2}$
+          pattern: "^[0-9]{2}[A-Z]{2}$"
           type: string
           example: 99XX
       - name: administratienr
@@ -3509,27 +3531,27 @@ paths:
         style: form
         explode: true
         schema:
-          pattern: ^[0-9]{2}$
+          pattern: "^[0-9]{2}$"
           type: string
           example: "00"
       - name: edu-to
         in: query
-        description: <body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: <body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -3602,7 +3624,7 @@ paths:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
-                detail: The server understood the request, but is refusing to fulfill it.
+                detail: "The server understood the request, but is refusing to fulfill it."
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
@@ -3712,7 +3734,7 @@ paths:
                 $ref: '#/components/schemas/Foutbericht'
               example:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4
-                title: Bronservice {bron} is tijdelijk niet beschikbaar.
+                title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
@@ -3744,22 +3766,22 @@ paths:
           example: faoserver-abc123
       - name: edu-to
         in: query
-        description: <body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: <body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -3830,7 +3852,7 @@ paths:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
-                detail: The server understood the request, but is refusing to fulfill it.
+                detail: "The server understood the request, but is refusing to fulfill it."
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
                 code: autorisation
         "404":
@@ -3956,7 +3978,7 @@ paths:
                 $ref: '#/components/schemas/Foutbericht'
               example:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4
-                title: Bronservice {bron} is tijdelijk niet beschikbaar.
+                title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
@@ -3993,7 +4015,7 @@ paths:
         style: form
         explode: true
         schema:
-          pattern: ^[0-9]{2}[A-Z]{2}$
+          pattern: "^[0-9]{2}[A-Z]{2}$"
           type: string
           example: 99XX
       - name: administratienr
@@ -4003,27 +4025,27 @@ paths:
         style: form
         explode: true
         schema:
-          pattern: ^[0-9]{2}$
+          pattern: "^[0-9]{2}$"
           type: string
           example: "00"
       - name: edu-to
         in: query
-        description: <body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: <body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -4096,7 +4118,7 @@ paths:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
-                detail: The server understood the request, but is refusing to fulfill it.
+                detail: "The server understood the request, but is refusing to fulfill it."
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
@@ -4206,7 +4228,7 @@ paths:
                 $ref: '#/components/schemas/Foutbericht'
               example:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4
-                title: Bronservice {bron} is tijdelijk niet beschikbaar.
+                title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
@@ -4224,7 +4246,7 @@ paths:
     post:
       tags:
       - LAS
-      description: <body><p>Notificatie over scores en resultaten voor een administratie van de school. Let op, wordt alleen verstuurd als de score wijzigt (dus niet op moment van publicatie van N-termen alle cijfers berekend en toegevoegd worden).</p></body>
+      description: "<body><p>Notificatie over scores en resultaten voor een administratie van de school. Let op, wordt alleen verstuurd als de score wijzigt (dus niet op moment van publicatie van N-termen alle cijfers berekend en toegevoegd worden).</p></body>"
       operationId: postResultatenscoresNotificaties
       parameters:
       - name: instellingscode
@@ -4234,9 +4256,9 @@ paths:
         style: form
         explode: true
         schema:
-          pattern: ^[0-9]{2}[A-Z]{2}$
+          pattern: "^[0-9]{2}[A-Z]{2}$"
           type: string
-          example: 99XX
+        example: 99XX
       - name: administratienr
         in: query
         description: <body><p>Volgnummer dat wordt gebruikt om de administratie binnen de instellingscode (BRIN4) te duiden. De waarde van dit administratienummer kan overeenkomen met de waarde van een vestigingscode maar dat hoeft niet.</p></body><body><p>De waarde is code van 2 cijfers.</p></body>
@@ -4244,34 +4266,42 @@ paths:
         style: form
         explode: true
         schema:
-          pattern: ^[0-9]{2}$
+          pattern: "^[0-9]{2}$"
           type: string
-          example: "00"
+        example: "00"
       - name: edu-to
         in: query
-        description: <body><p>Dit geeft aan namens welke school het LAS het bericht ontvangt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht ontvangt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
-          example: "00000007000118900534"
+        example: "00000007000118900534"
       - name: edu-from
         in: query
-        description: <body><p>Dit geeft aan namens welke organisatie Facet het bericht verzendt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het bericht verzendt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: ^(\d|\D){20}$
+          pattern: "^(\\\\d|\\\\D){20}$"
           type: string
-          example: "00000007000116700000"
+        example: 481057013760
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Resultatenscoresnotificatie'
+              $ref: '#/components/schemas/ResultatenscoresNotificatie'
+            examples:
+              Voorbeeld Notificatie:
+                value:
+                  examen: examen20240001
+                  afnamegroepids:
+                  - afnamegroep-abc123
+                  - afnamegroep-abc234
+                  - afnamegroep-abc345
       responses:
         "201":
           description: OK
@@ -4283,7 +4313,7 @@ paths:
               schema:
                 type: string
                 format: uri
-                example: https://api.facet.onl/resultatenscoresnotificaties/
+                example: /resultatenscoresnotificaties/
             api-version:
               $ref: '#/components/headers/api_version'
             warning:
@@ -4291,7 +4321,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Resultatenscoresnotificatie'
+                $ref: '#/components/schemas/ResultatenscoresNotificatie'
         "400":
           description: Bad Request
           headers:
@@ -4342,7 +4372,7 @@ paths:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
-                detail: The server understood the request, but is refusing to fulfill it.
+                detail: "The server understood the request, but is refusing to fulfill it."
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
@@ -4452,7 +4482,7 @@ paths:
                 $ref: '#/components/schemas/Foutbericht'
               example:
                 type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4
-                title: Bronservice {bron} is tijdelijk niet beschikbaar.
+                title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
                 instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
@@ -4482,14 +4512,14 @@ components:
           example: Administratienaam01
         nummer:
           title: nummer
-          pattern: ^[0-9]{2}$
+          pattern: "^[0-9]{2}$"
           type: string
           description: <body><p>Het volgnummer van de administratie binnen de school. De waarde van dit administratienummer kan overeenkomen met de waarde van een vestigingscode maar dat hoeft niet.</p></body><body><p>Dit administratienummer bestaat uit 2 cijfers.</p></body>
           example: "03"
       description: <body><p>Verzameling van gegevens bij een administratie binnen de school.</p></body>
     Afnamegroep:
       required:
-      - afnameleider
+      - afnameleiderids
       - examen
       - examenkandidaat
       - naam
@@ -4497,12 +4527,14 @@ components:
       - planningsgegevens
       type: object
       properties:
-        afnameleider:
-          title: afnameleider
-          minLength: 1
-          type: string
-          description: <body><p>Verwijzing naar de afnameleider van de afnamegroep.</p></body>
-          example: afnameleider-abc123
+        afnameleiderids:
+          title: afnameleiderids
+          minItems: 1
+          type: array
+          description: <body><p>Verwijzingen naar de afnameleiders van de afnamegroep. Meerdere afnameleiders geeft de mogelijkheid om in het geval van afwezigheid van de eerste afnameleider sneller tot een oplossing te komen rondom de afname. Totdat de functionaliteit is verwerkt  in Facet zal alleen de eerstgenoemde afnameleider worden gebruikt.</p></body>
+          items:
+            type: string
+            example: afnameleider-abc123
         corrector1:
           title: corrector1
           type: string
@@ -4532,11 +4564,10 @@ components:
           example: afnamegroep-abc123
         naam:
           title: naam
-          maxLength: 100
           minLength: 1
           type: string
           description: <body><p>De naam van de afnamegroep zoals deze in het LAS is toegevoegd. Deze naam is maximaal 100 karakters lang.</p></body>
-          example: afnamegroepnaam01
+          example: Afnamegroepnaam01
         onderwijsorganisatie:
           $ref: '#/components/schemas/Onderwijsorganisatie'
         planningsgegevens:
@@ -4552,7 +4583,7 @@ components:
           title: achternaam
           minLength: 1
           type: string
-          description: <body><p>Achternaam van de afnameleider, inclusief voorvoegsel.</p></body>
+          description: "<body><p>Achternaam van de afnameleider, inclusief voorvoegsel.</p></body>"
           example: Achternaam01
         id:
           title: id
@@ -4577,7 +4608,7 @@ components:
           title: achternaam
           minLength: 1
           type: string
-          description: <body><p>Achternaam van de corrector, inclusief voorvoegsel.</p></body>
+          description: "<body><p>Achternaam van de corrector, inclusief voorvoegsel.</p></body>"
           example: Achternaam01
         id:
           title: id
@@ -4609,7 +4640,7 @@ components:
         correctieronden:
           title: correctieronden
           type: integer
-          description: <body><p>Het aantal correctieronden van het examen; waarde is altijd 0, 1 of 2 (dus nooit meer dan 2).</p></body>
+          description: "<body><p>Het aantal correctieronden van het examen; waarde is altijd 0, 1 of 2 (dus nooit meer dan 2).</p></body>"
           example: 2
         id:
           title: id
@@ -4627,7 +4658,7 @@ components:
           title: niveau
           minLength: 1
           type: string
-          description: <body><p>Typering van het niveau van het examen. Er zijn afspraken gemaakt over de verschillende waarden die gebruikt zullen worden en dit is vastgelegd in de enumeratie NiveauVO. Deze enumeratie is niet bindend, d.w.z. kan in overleg worden aangepast.</p></body>
+          description: "<body><p>Typering van het niveau van het examen. Er zijn afspraken gemaakt over de verschillende waarden die gebruikt zullen worden en dit is vastgelegd in de enumeratie NiveauVO. Deze enumeratie is niet bindend, d.w.z. kan in overleg worden aangepast.</p></body>"
           example: Examenniveau01
         omschrijving:
           title: omschrijving
@@ -4644,11 +4675,12 @@ components:
           format: uri
           nullable: true
         vakken:
+          title: vakken
           minItems: 1
           type: array
           description: <body><p>Geeft aan waar in een opleiding (bij welke vakken) het examen geplaatst kan worden door vermelding van de betreffende vakcodes.</p></body><body><p>Vakcode is op basis van DUO Vakcodetabel.</p></body><body><p>Vakcode bestaat uit 4 cijfers.</p></body>
           items:
-            pattern: ^[0-9]{4}$
+            pattern: "^[0-9]{4}$"
             type: string
             example: "1001"
         versie:
@@ -4657,7 +4689,7 @@ components:
           type: string
           description: <body><p>Versie van het examen.</p></body>
           example: Versie01
-      description: <body><p>Verzameling van gegevens bij een examen. Let op, de eigenschap niveau geeft het niveau van het examen aan.</p></body>
+      description: "<body><p>Verzameling van gegevens bij een examen. Let op, de eigenschap niveau geeft het niveau van het examen aan.</p></body>"
     Examenvariant:
       required:
       - examencijferberekening
@@ -4688,9 +4720,9 @@ components:
           description: <body><p>Naam van de examenvariant.</p></body>
         necode:
           title: necode
-          pattern: ^[0-9]{5}$
+          pattern: "^[0-9]{5}$"
           type: string
-          description: <body><p>NE-code is een extra code die optioneel kan worden toegevoegd aan een Examenvariant. Deze NE-code is relevant om koppeling te kunnen houden met het WOI-bestand Wolf.</p></body><body><p>NE-code (aka nex_id), bestaat uit 5 cijfers.</p></body>
+          description: "<body><p>NE-code is een extra code die optioneel kan worden toegevoegd aan een Examenvariant. Deze NE-code is relevant om koppeling te kunnen houden met het WOI-bestand Wolf.</p></body><body><p>NE-code (aka nex_id), bestaat uit 5 cijfers.</p></body>"
           nullable: true
           example: "21101"
         omschrijving:
@@ -4730,7 +4762,7 @@ components:
           type: string
           description: <body><p>De naam van de FAO-server.</p></body>
           example: Faoservernaam01
-      description: <body><p>Verzameling van gegevens bij een FAO-server. FAO staat voor Facet afname offline. Een FAO-server is een afnameserver die bij de onderwijslocatie/instelling is geïnstalleerd en waarop de offline afnames worden afgenomen.</p></body>
+      description: <body><p>Verzameling van gegevens bij een FAO-server. FAO staat voor Facet afname offline. Een FAO-server is een afnameserver die bij de onderwijslocatie/instelling is ge??nstalleerd en waarop de offline afnames worden afgenomen.</p></body>
     Resultatenscores:
       required:
       - examen
@@ -4745,7 +4777,7 @@ components:
         datumtijd:
           title: datumtijd
           type: string
-          description: <body><p>Datum en tijdstip waarop de verzameling resultaten en scores is samengesteld.</p></body><body><p>Een datumtijdstip uniek uitgedrukt jaartal, maand, dag, uren, minuten en seconden volgens ISO 8601, bijvoorbeeld 2021-03-22T10:29Z.</p></body>
+          description: "<body><p>Datum en tijdstip waarop de verzameling resultaten en scores is samengesteld.</p></body><body><p>Een datumtijdstip uniek uitgedrukt jaartal, maand, dag, uren, minuten en seconden volgens ISO 8601, bijvoorbeeld 2021-03-22T10:29Z.</p></body>"
           format: date-time
           nullable: true
           example: 2021-03-10T13:00:00Z
@@ -4774,8 +4806,9 @@ components:
         score:
           $ref: '#/components/schemas/Score'
       description: <body><p>Gegevensgroep van scores en resultaten van een examenkandidaat uit afnames voor een enkele afname van een examen.</p></body>
-    Resultatenscoresnotificatie:
+    ResultatenscoresNotificatie:
       required:
+      - afnamegroepids
       - examen
       type: object
       properties:
@@ -4785,6 +4818,14 @@ components:
           type: string
           description: <body><p>Verwijzing naar het examen van de resultatenscores-notificatie.</p></body>
           example: examen-abc123
+        afnamegroepids:
+          title: afnamegroepids
+          minItems: 1
+          type: array
+          description: <body><p>Verwijzingen naar de afnamegroepen die bij deze notificatie over de resultatenscores zijn betrokken. </p></body>
+          items:
+            type: string
+            example: afnamegroep-abc123
       description: <body><p>De notificatie over scores en resultaten van een specifiek examen.</p></body>
     Afname:
       required:
@@ -4795,7 +4836,7 @@ components:
         afnametijdstip:
           title: afnametijdstip
           type: string
-          description: <body><p>Datum en tijdstip waarop de afname plaatsvond.</p></body><body><p>Een datumtijdstip uniek uitgedrukt jaartal, maand, dag, uren, minuten en seconden volgens ISO 8601, bijvoorbeeld 2021-03-22T10:29Z.</p></body>
+          description: "<body><p>Datum en tijdstip waarop de afname plaatsvond.</p></body><body><p>Een datumtijdstip uniek uitgedrukt jaartal, maand, dag, uren, minuten en seconden volgens ISO 8601, bijvoorbeeld 2021-03-22T10:29Z.</p></body>"
           format: date-time
           nullable: true
           example: 2021-03-22T10:29:00Z
@@ -4835,7 +4876,7 @@ components:
           $ref: '#/components/schemas/Afname'
         bron:
           $ref: '#/components/schemas/Bron'
-      description: <body><p>Informatie over de plek, tijd en wijze waarop de toets is afgenomen.</p></body>
+      description: "<body><p>Informatie over de plek, tijd en wijze waarop de toets is afgenomen.</p></body>"
     Bron:
       required:
       - url
@@ -4844,9 +4885,9 @@ components:
         url:
           title: url
           type: string
-          description: <body><p>URL naar de (detail)resultaten, waarmee de verwerker van de resultaten inzicht kan verlenen in de gedetailleerde scores.</p></body>
+          description: "<body><p>URL naar de (detail)resultaten, waarmee de verwerker van de resultaten inzicht kan verlenen in de gedetailleerde scores.</p></body>"
           format: uri
-      description: <body><p>De (detail)informatie in het systeem van de toetsleverancier. Kan bijvoorbeeld verwijzen naar de resultaten of scores van individuele personen, of toegang geven tot resultaten of scores van items, indien beschikbaar bij de uitgever.</p></body>
+      description: "<body><p>De (detail)informatie in het systeem van de toetsleverancier. Kan bijvoorbeeld verwijzen naar de resultaten of scores van individuele personen, of toegang geven tot resultaten of scores van items, indien beschikbaar bij de uitgever.</p></body>"
     Examenafnamecondities:
       required:
       - afnameperiodeBegin
@@ -4859,19 +4900,19 @@ components:
         afnameperiodeBegin:
           title: afnameperiodeBegin
           type: string
-          description: <body><p>De begintijd (inclusief datum) van de tijdsperiode waarbinnen de afname kan worden gepland.</p></body><body><p>Een tijdsperiode uitgedrukt in tijdstip volgens ISO 8601, bijvoorbeeld 2021-03-24T09:00:00Z.</p></body>
+          description: "<body><p>De begintijd (inclusief datum) van de tijdsperiode waarbinnen de afname kan worden gepland.</p></body><body><p>Een tijdsperiode uitgedrukt in tijdstip volgens ISO 8601, bijvoorbeeld 2021-03-24T09:00:00Z.</p></body>"
           format: date-time
           example: 2021-03-24T09:00:00Z
         afnameperiodeEind:
           title: afnameperiodeEind
           type: string
-          description: <body><p>De eindtijd (inclusief datum) van de tijdsperiode waarbinnen de afname kan worden gepland.</p></body><body><p>Een tijdsperiode uitgedrukt in tijdstip volgens ISO 8601, bijvoorbeeld 2021-03-24T09:00:00Z.</p></body>
+          description: "<body><p>De eindtijd (inclusief datum) van de tijdsperiode waarbinnen de afname kan worden gepland.</p></body><body><p>Een tijdsperiode uitgedrukt in tijdstip volgens ISO 8601, bijvoorbeeld 2021-03-24T09:00:00Z.</p></body>"
           format: date-time
           example: 2021-03-24T17:00:00Z
         begintijdAfname:
           title: begintijdAfname
           type: string
-          description: <body><p>Het moment van begin van de afname.</p></body><body><p>Een datumtijdstip uniek uitgedrukt jaartal, maand, dag, uren, minuten en seconden volgens ISO 8601, bijvoorbeeld 2021-03-22T10:29Z.</p></body>
+          description: "<body><p>Het moment van begin van de afname.</p></body><body><p>Een datumtijdstip uniek uitgedrukt jaartal, maand, dag, uren, minuten en seconden volgens ISO 8601, bijvoorbeeld 2021-03-22T10:29Z.</p></body>"
           format: date-time
           nullable: true
           example: 2021-03-22T10:29:00Z
@@ -4882,7 +4923,7 @@ components:
           example: 150
         examenregime:
           title: examenregime
-          pattern: ^[0-9]{4}$
+          pattern: "^[0-9]{4}$"
           type: string
           description: <body><p>Welk examenregime van toepassing is. Het examenregime is de regelgeving die van toepassing is tijdens het bepalen van de uitslag en wordt weergeven met een jaartal.</p></body><body><p>Jaartal</p></body>
           example: "2022"
@@ -4890,7 +4931,7 @@ components:
           title: individueleHulpmiddelen
           minItems: 0
           type: array
-          description: <body><p>De lijst van hulpmiddelen die individueel toegestaan zijn voor het examen. Er zijn afspraken gemaakt over de verschillende waarden die gebruikt zullen worden en dit is vastgelegd in de enumeratie HulpmiddelenSoort. Deze enumeratie is niet bindend, d.w.z. kan in overleg worden aangepast.</p></body>
+          description: "<body><p>De lijst van hulpmiddelen die individueel toegestaan zijn voor het examen. Er zijn afspraken gemaakt over de verschillende waarden die gebruikt zullen worden en dit is vastgelegd in de enumeratie HulpmiddelenSoort. Deze enumeratie is niet bindend, d.w.z. kan in overleg worden aangepast.</p></body>"
           items:
             type: string
         inplanbaar:
@@ -4901,7 +4942,7 @@ components:
           title: standaardHulpmiddelen
           minItems: 0
           type: array
-          description: <body><p>De lijst van hulpmiddelen die standaard toegestaan zijn voor het examen. Er zijn afspraken gemaakt over de verschillende waarden die gebruikt zullen worden en dit is vastgelegd in de enumeratie HulpmiddelenSoort. Deze enumeratie is niet bindend, d.w.z. kan in overleg worden aangepast.</p></body>
+          description: "<body><p>De lijst van hulpmiddelen die standaard toegestaan zijn voor het examen. Er zijn afspraken gemaakt over de verschillende waarden die gebruikt zullen worden en dit is vastgelegd in de enumeratie HulpmiddelenSoort. Deze enumeratie is niet bindend, d.w.z. kan in overleg worden aangepast.</p></body>"
           items:
             type: string
         tijdvak:
@@ -4920,7 +4961,7 @@ components:
         properties:
           examencijferparameters:
             $ref: '#/components/schemas/Examencijferparameters'
-        description: <body><p>De berekening van het examencijfer, op basis van score (S), schaallengte (L) en N-term (N).</p></body>
+        description: "<body><p>De berekening van het examencijfer, op basis van score (S), schaallengte (L) en N-term (N).</p></body>"
     Examencijferparameters:
       type: object
       properties:
@@ -4929,13 +4970,13 @@ components:
           maximum: 3
           minimum: 0
           type: number
-          description: '<body><p>De normeringsterm (N), vast te stellen door het College voor examens middels een normeringsbeslissing.</p></body><body><p>Liggend tussen de waarden: N = 0.0 en N = 3.0.</p></body>'
+          description: "<body><p>De normeringsterm (N), vast te stellen door het College voor examens middels een normeringsbeslissing.</p></body><body><p>Liggend tussen de waarden: N = 0.0 en N = 3.0.</p></body>"
           nullable: true
           example: 1
         schaallengte:
           title: schaallengte
           type: integer
-          description: <body><p>De lengte van de scoreschaal (L), zoals vastgelegd in het correctievoorschrift.</p></body>
+          description: "<body><p>De lengte van de scoreschaal (L), zoals vastgelegd in het correctievoorschrift.</p></body>"
           nullable: true
           example: 68
       description: <body><p>Gegevensgroep met de parameters (N-term en schaallengte) die bij de berekening van het examencijfer worden betrokken.</p></body>
@@ -4960,15 +5001,14 @@ components:
         geboortedatum:
           title: geboortedatum
           type: string
-          description: <body><p>De geboortedatum van de examenkandidaat.</p></body><body><p>Een datum uitgedrukt jaartal, maand en dag volgens ISO 8601, bijvoorbeeld 2021-03-22.</p></body>
+          description: "<body><p>De geboortedatum van de examenkandidaat.</p></body><body><p>Een datum uitgedrukt jaartal, maand en dag volgens ISO 8601, bijvoorbeeld 2021-03-22.</p></body>"
           format: date
           example: 2001-03-22
         gebruikersnaam:
           title: gebruikersnaam
-          maxLength: 20
           minLength: 1
           type: string
-          description: <body><p>De gebruikersnaam waarmee de kandidaat inlogt in Facet.  Deze gebruikersnaam is maximaal 20 karakters lang.</p></body>
+          description: <body><p>De gebruikersnaam waarmee de kandidaat inlogt in Facet.</p></body>
           example: gebruikersnaam01
         geslacht:
           $ref: '#/components/schemas/Geslachttype'
@@ -4978,14 +5018,14 @@ components:
           title: niveau
           minLength: 1
           type: string
-          description: <body><p>Het niveau van de examenkandidaat. Gebruik hiervoor het enkelvoudige niveau van de opleiding waarvoor de kandidaat is ingeschreven. Er zijn afspraken gemaakt over de verschillende waarden die gebruikt zullen worden en dit is vastgelegd in de enumeratie NiveauVO. Deze enumeratie is niet bindend, d.w.z. kan in overleg worden aangepast.</p></body>
+          description: "<body><p>Het niveau van de examenkandidaat. Gebruik hiervoor het enkelvoudige niveau van de opleiding waarvoor de kandidaat is ingeschreven. Er zijn afspraken gemaakt over de verschillende waarden die gebruikt zullen worden en dit is vastgelegd in de enumeratie NiveauVO. Deze enumeratie is niet bindend, d.w.z. kan in overleg worden aangepast.</p></body>"
         onderwijsdeelnemeridentiteit:
           type: array
           items:
             $ref: '#/components/schemas/Onderwijsdeelnemeridentiteit'
         weergavekenmerken:
           $ref: '#/components/schemas/Weergavekenmerken'
-      description: <body><p>Verzameling van gegevens bij een examenkandidaat. Let op, de eigenschappen niveau en leerjaar geven het niveau en het leerjaar van de opleiding/studie van de examenkandidaat aan. Bijvoorbeeld, als een havo 4 examenkandidaat plant voor afname van een vwo 6 examen dan wordt hier VO-HAVO en Leerjaar 4 ingevuld.</p></body>
+      description: "<body><p>Verzameling van gegevens bij een examenkandidaat. Let op, de eigenschappen niveau en leerjaar geven het niveau en het leerjaar van de opleiding/studie van de examenkandidaat aan. Bijvoorbeeld, als een havo 4 examenkandidaat plant voor afname van een vwo 6 examen dan wordt hier VO-HAVO en Leerjaar 4 ingevuld.</p></body>"
     Onderwijsdeelnemeridentiteit:
       required:
       - typelabel
@@ -5000,7 +5040,7 @@ components:
           type: string
           description: <body><p>Identifier binnen de door het typelabel aangegeven identificatiewijze.</p></body>
           example: laskey-abc123
-      description: <body><p>Verwijzing naar informatie over de persoon in de vorm van een identifier van de persoon in een bepaalde registratie.</p></body><body><p>Voorbeelden van identificatiewijzen zijn ECKiD, BSN, Onderwijsnummer, of elke andere registratie (bijvoorbeeld LAS, SIS of HR-systeem) waaraan een identiteit kan worden ontleend. Afhankelijk van de toepassing is het gebruik van bepaalde vormen van identificatie al dan niet toegestaan.</p></body>
+      description: "<body><p>Verwijzing naar informatie over de persoon in de vorm van een identifier van de persoon in een bepaalde registratie.</p></body><body><p>Voorbeelden van identificatiewijzen zijn ECKiD, BSN, Onderwijsnummer, of elke andere registratie (bijvoorbeeld LAS, SIS of HR-systeem) waaraan een identiteit kan worden ontleend. Afhankelijk van de toepassing is het gebruik van bepaalde vormen van identificatie al dan niet toegestaan.</p></body>"
     Onderwijsorganisatie:
       required:
       - administratienr
@@ -5009,13 +5049,13 @@ components:
       properties:
         administratienr:
           title: administratienr
-          pattern: ^[0-9]{2}$
+          pattern: "^[0-9]{2}$"
           type: string
           description: <body><p>Volgnummer dat wordt gebruikt om de administratie binnen de instellingscode (BRIN4) te duiden. De waarde van dit administratienummer kan overeenkomen met de waarde van een vestigingscode maar dat hoeft niet.</p></body><body><p>De waarde is code van 2 cijfers.</p></body>
           example: "00"
         instellingscode:
           title: instellingscode
-          pattern: ^[0-9]{2}[A-Z]{2}$
+          pattern: "^[0-9]{2}[A-Z]{2}$"
           type: string
           description: <body><p>Instellingscode (voorheen BRIN4) is de identificatie van de school.</p></body><body><p>Waarde bestaat uit 2 cijfers gevolgd door 2 letters.</p></body>
           example: 99AA
@@ -5039,6 +5079,11 @@ components:
           description: <body><p>Verwijzing naar de FAO-server van de afnamegroep middels diens id. FAO staat voor Facet afname offline. Iedere offline afname moet uiteindelijk een FAO-server hebben gekoppeld.</p></body>
           nullable: true
           example: faoserver-abc123
+        examenlokaal:
+          title: examenlokaal
+          type: string
+          description: <body><p>Naam of code van lokaal of ruimte waarin examen wordt afgenomen.</p></body>
+          nullable: true
       description: <body><p>Verzameling van planningsgegevens bij een afnamegroep.</p></body>
     Resultaat:
       required:
@@ -5049,7 +5094,7 @@ components:
         mutatiedatum:
           title: mutatiedatum
           type: string
-          description: <body><p>Moment waarop het resultaat voor het laatst gewijzigd is.</p></body><body><p>Een datumtijdstip uniek uitgedrukt jaartal, maand, dag, uren, minuten en seconden volgens ISO 8601, bijvoorbeeld 2021-03-22T10:29Z.</p></body>
+          description: "<body><p>Moment waarop het resultaat voor het laatst gewijzigd is.</p></body><body><p>Een datumtijdstip uniek uitgedrukt jaartal, maand, dag, uren, minuten en seconden volgens ISO 8601, bijvoorbeeld 2021-03-22T10:29Z.</p></body>"
           format: date-time
           nullable: true
           example: 2021-03-22T10:29:00Z
@@ -5060,7 +5105,7 @@ components:
           minLength: 1
           type: string
           description: <body><p>De behaalde resultaatwaarde binnen de door het typelabel aangegeven resultaattype.</p></body>
-          example: 9,0
+          example: "9,0"
       description: <body><p>Gegevens over het resultaat zoals bepaald na normering van de score.</p></body>
     Score:
       required:
@@ -5078,7 +5123,7 @@ components:
         mutatiedatum:
           title: mutatiedatum
           type: string
-          description: <body><p>Moment waarop de score voor het laatst gewijzigd is.</p></body><body><p>Een datumtijdstip uniek uitgedrukt jaartal, maand, dag, uren, minuten en seconden volgens ISO 8601, bijvoorbeeld 2021-03-22T10:29Z.</p></body>
+          description: "<body><p>Moment waarop de score voor het laatst gewijzigd is.</p></body><body><p>Een datumtijdstip uniek uitgedrukt jaartal, maand, dag, uren, minuten en seconden volgens ISO 8601, bijvoorbeeld 2021-03-22T10:29Z.</p></body>"
           format: date-time
           nullable: true
           example: 2021-03-22T10:29:00Z
@@ -5090,7 +5135,7 @@ components:
           type: string
           description: <body><p>De behaalde scorewaarde binnen de door het typelabel aangegeven scoretype.</p></body>
           example: "30"
-      description: <body><p>Een individuele score.</p></body>
+      description: "<body><p>Een individuele score. Alleen de definitieve score wordt uitgewisseld, dus geen score bij afgebroken afname en ook geen voorlopige score.</p></body>"
     Weergavekenmerken:
       required:
       - achternaam
@@ -5102,25 +5147,25 @@ components:
           title: achternaam
           minLength: 1
           type: string
-          description: <body><p>De achternaam van de examenkandidaat die op het scherm wordt weergegeven, t.b.v. controle door de examenleider.</p></body>
+          description: "<body><p>De achternaam van de examenkandidaat die op het scherm wordt weergegeven, t.b.v. controle door de examenleider.</p></body>"
           example: Achternaam01
         voornaam:
           title: voornaam
           minLength: 1
           type: string
-          description: <body><p>De voornaam van de examenkandidaat die op het scherm wordt weergegeven, t.b.v. controle door de examenleider.</p></body>
+          description: "<body><p>De voornaam van de examenkandidaat die op het scherm wordt weergegeven, t.b.v. controle door de examenleider.</p></body>"
           example: Voornaam01
         voorvoegsel:
           title: voorvoegsel
           type: string
-          description: <body><p>Voorvoegsel bij de achternaam van de examenkandidaat die op het scherm wordt weergegeven, t.b.v. controle door de examenleider.</p></body>
+          description: "<body><p>Voorvoegsel bij de achternaam van de examenkandidaat die op het scherm wordt weergegeven, t.b.v. controle door de examenleider.</p></body>"
           nullable: true
           example: van de
         weergaveidentiteit:
           title: weergaveidentiteit
           minLength: 1
           type: string
-          description: <body><p>Identiteit van de examenkandidaat (bijv. leerlingnummer) die op het scherm wordt weergegeven, t.b.v. controle door de examenleider.</p></body>
+          description: "<body><p>Identiteit van de examenkandidaat (bijv. leerlingnummer) die op het scherm wordt weergegeven, t.b.v. controle door de examenleider.</p></body>"
           example: leerling01
       description: <body><p>Kenmerken over de examenkandidaat die (alleen) op het scherm weergegeven worden.</p></body>
     Referentieschaal:
@@ -5218,7 +5263,6 @@ components:
         title:
           type: string
           description: Beschrijving van de fout
-          nullable: true
         status:
           type: integer
           description: Http status code
@@ -5237,7 +5281,7 @@ components:
           type: string
           description: Systeemcode die het type fout aangeeft
           nullable: true
-      description: Terugmelding bij een fout. JSON representatie in lijn met [RFC7807](https://tools.ietf.org/html/rfc7807).
+      description: "Terugmelding bij een fout. JSON representatie in lijn met [RFC7807](https://tools.ietf.org/html/rfc7807)."
     InvalidParams:
       type: object
       properties:
@@ -5245,7 +5289,7 @@ components:
           type: string
           format: uri
           nullable: true
-          example: https://www.edustandaard.nl/amigo/api/2/validaties/integer
+          example: "https://www.edustandaard.nl/amigo/api/{major-versie}/validaties/integer"
         name:
           type: string
           description: Naam van de parameter
@@ -5263,6 +5307,202 @@ components:
           nullable: true
           example: Waarde is geen geldige integer.
       description: Details over fouten in opgegeven parameters
+  responses:
+    "400":
+      description: Bad Request
+      headers:
+        api-version:
+          $ref: '#/components/headers/api_version'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/BadRequestFoutbericht'
+          example:
+            type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1
+            title: Ten minste één parameter moet worden opgegeven.
+            status: 400
+            detail: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modification.
+            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            code: paramsRequired
+            invalidParams:
+            - type: https://www.edustandaard.nl/amigo/api/validaties/integer
+              name: score
+              code: integer
+              reason: Waarde is geen geldige integer.
+    "401":
+      description: Unauthorized
+      headers:
+        api-version:
+          $ref: '#/components/headers/api_version'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Foutbericht'
+          example:
+            type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2
+            title: Niet correct geauthenticeerd.
+            status: 401
+            detail: The request requires user authentication. The response MUST include a WWW-Authenticate header field (section 14.47) containing a challenge applicable to the requested resource.
+            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            code: authentication
+    "403":
+      description: Forbidden
+      headers:
+        api-version:
+          $ref: '#/components/headers/api_version'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Foutbericht'
+          example:
+            type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4
+            title: U bent niet geautoriseerd voor deze operatie.
+            status: 403
+            detail: "The server understood the request, but is refusing to fulfill it."
+            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            code: autorisation
+    "409":
+      description: Conflict
+      headers:
+        api-version:
+          $ref: '#/components/headers/api_version'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Foutbericht'
+          example:
+            type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.10
+            title: Conflict
+            status: 409
+            detail: The request could not be completed due to a conflict with the current state of the resource
+            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            code: conflict
+    "410":
+      description: Gone
+      headers:
+        api-version:
+          $ref: '#/components/headers/api_version'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Foutbericht'
+          example:
+            type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.11
+            title: Gone
+            status: 410
+            detail: The request could not be completed due to a conflict with the current state of the resource
+            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            code: gone
+    "415":
+      description: Unsupported Media Type
+      headers:
+        api-version:
+          $ref: '#/components/headers/api_version'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Foutbericht'
+          example:
+            type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.16
+            title: Unsupported Media Type
+            status: 415
+            detail: The server is refusing the request because the entity of the request is in a format not supported by the requested resource for the requested method.
+            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            code: unsupported
+    "429":
+      description: Too Many Requests
+      headers:
+        api-version:
+          $ref: '#/components/headers/api_version'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Foutbericht'
+          example:
+            type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+            title: Too many request
+            status: 429
+            detail: The user has sent too many requests in a given amount of time (rate limiting).
+            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            code: tooManyRequests
+    "500":
+      description: Internal Server Error
+      headers:
+        api-version:
+          $ref: '#/components/headers/api_version'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Foutbericht'
+          example:
+            type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1
+            title: Interne server fout.
+            status: 500
+            detail: The server encountered an unexpected condition which prevented it from fulfilling the request.
+            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            code: serverError
+    "501":
+      description: Not Implemented
+      headers:
+        api-version:
+          $ref: '#/components/headers/api_version'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Foutbericht'
+          example:
+            type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.2
+            title: Not Implemented
+            status: 501
+            detail: The server does not support the functionality required to fulfill the request.
+            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            code: notImplemented
+    "503":
+      description: Service Unavailable
+      headers:
+        api-version:
+          $ref: '#/components/headers/api_version'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Foutbericht'
+          example:
+            type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4
+            title: "Bronservice {bron} is tijdelijk niet beschikbaar."
+            status: 503
+            detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
+            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            code: notAvailable
+    default:
+      description: Er is een onverwachte fout opgetreden
+      headers:
+        api-version:
+          $ref: '#/components/headers/api_version'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Foutbericht'
+    "404":
+      description: Not Found
+      headers:
+        api-version:
+          $ref: '#/components/headers/api_version'
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Foutbericht'
+          example:
+            type: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5
+            title: Opgevraagde resource bestaat niet.
+            status: 404
+            detail: The server has not found anything matching the Request-URI.
+            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            code: notFound
+    "204":
+      description: No content
+      headers:
+        api-version:
+          $ref: '#/components/headers/api_version'
   headers:
     api_version:
       style: simple
@@ -5277,8 +5517,8 @@ components:
       explode: false
       schema:
         type: string
-        description: zie RFC 7234. In het geval een major versie wordt uitgefaseerd, gebruiken we warn-code 299 ("Miscellaneous Persistent Warning") en het API end-point (inclusief versienummer) als de warn-agent van de warning, gevolgd door de warn-text met de human-readable waarschuwing
-        example: '299 https://service.../api/.../v1 "Deze versie van de API is verouderd en zal uit dienst worden genomen op 2018-02-01. Raadpleeg voor meer informatie hier de documentatie: https://omgevingswet.../api/.../v1".'
+        description: "zie RFC 7234. In het geval een major versie wordt uitgefaseerd, gebruiken we warn-code 299 (\"Miscellaneous Persistent Warning\") en het API end-point (inclusief versienummer) als de warn-agent van de warning, gevolgd door de warn-text met de human-readable waarschuwing"
+        example: "299 https://service.../api/.../v1 \"Deze versie van de API is verouderd en zal uit dienst worden genomen op 2018-02-01. Raadpleeg voor meer informatie hier de documentatie: https://omgevingswet.../api/.../v1\"."
     X_Rate_Limit_Limit:
       style: simple
       explode: false
@@ -5294,4 +5534,3 @@ components:
       explode: false
       schema:
         type: integer
-    
