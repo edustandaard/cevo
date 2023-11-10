@@ -2,13 +2,13 @@
 openapi: 3.0.0
 info:
   title: Centrale-Examens-VO
-  description: "<body><p>OAS3-definities op 1 november 2023 gemaakt n.a.v. het overleg tussen betrokkenen op 1 november, gebaseerd op de berichtenspecificaties en modellen Centrale Examens VO (CEVO) voor schooljaar 2023-2024. Ten opzichte van versie 01.02.03 (schooljaar 2022-2023) zijn de wijzigingen (1) Attribuut examenlokaal bij Planningsgegevens binnen Afnamegroep, (2) Meerdere afnameleiders bij Afnamegroep en (3) Betreffende afnamegroepen in notificatie.</p></body>"
+  description: "<body><p>OAS3-definities op 10 november 2023 gemaakt n.a.v. het overleg tussen betrokkenen op 1 november en commentaren op versie 01.03.01, gebaseerd op de berichtenspecificaties en modellen Centrale Examens VO (CEVO) voor schooljaar 2023-2024.</p></body><body><p>Ten opzichte van voorgaande schooljaar zijn de wijzigingen:</p></body><ol><li>Attribuut examenlokaal bij Planningsgegevens binnen Afnamegroep toegevoegd,</li><li>Meerdere afnameleiders bij Afnamegroep mogelijk (tot maximaal 5),</li><li>Betreffende afnamegroepen in notificatie toegevoegd,</li><li>De lijst van afnamegroepen uit de notificatie als extra parameter in verzoek om scores/resultaten.</p></body>"
   contact:
     url: https://github.com/edustandaard/Centrale-Examens-VO
   license:
     name: "European Union Public License, version 1.2 (EUPL-1.2)"
     url: https://eupl.eu/1.2/nl/
-  version: 01.03.01
+  version: 01.03.02
   x-imvertor-generator-version: 2.0.0
   x-yamlCompiler-stylesheets-version: "20210605"
 servers:
@@ -4001,13 +4001,24 @@ paths:
       parameters:
       - name: examenid
         in: query
-        description: <body><p>De identificatie van het examen dat de resultatenscores betreft.</p></body>
+        description: <body><p>De identificatie van het examen dat de gevraagde scores en resultaten betreft.</p></body>
         required: true
         style: form
         explode: true
         schema:
           type: string
           example: examen-abc123
+      - name: afnamegroepids
+        in: query
+        description: <body><p>De identificaties van de afnamegroepen die de gevraagde scores en resultaten betreffen.</p></body>
+        required: false
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+            example: afnamegroep-abc123
       - name: instellingscode
         in: query
         description: <body><p>Instellingscode (voorheen BRIN4) is de identificatie van de school dat de gevraagde scores en resultaten betreft.</p></body><body><p>Waarde bestaat uit 2 cijfers gevolgd door 2 letters.</p></body>
@@ -4300,8 +4311,8 @@ paths:
                   examen: examen20240001
                   afnamegroepids:
                   - afnamegroep-abc123
-                  - afnamegroep-abc234
-                  - afnamegroep-abc345
+                  - afnamegroep-klm456
+                  - afnamegroep-xyz789
       responses:
         "201":
           description: OK
@@ -4529,9 +4540,10 @@ components:
       properties:
         afnameleiderids:
           title: afnameleiderids
+          maxItems: 5
           minItems: 1
           type: array
-          description: <body><p>Verwijzingen naar de afnameleiders van de afnamegroep. Meerdere afnameleiders geeft de mogelijkheid om in het geval van afwezigheid van de eerste afnameleider sneller tot een oplossing te komen rondom de afname. Totdat de functionaliteit is verwerkt  in Facet zal alleen de eerstgenoemde afnameleider worden gebruikt.</p></body>
+          description: <body><p>Verwijzingen naar de afnameleiders van de afnamegroep. Meerdere afnameleiders geeft de mogelijkheid om in het geval van afwezigheid van de eerste afnameleider sneller tot een oplossing te komen rondom de afname. Totdat de functionaliteit is verwerkt in Facet zal alleen de eerstgenoemde afnameleider worden gebruikt. </p></body>
           items:
             type: string
             example: afnameleider-abc123
@@ -4564,9 +4576,10 @@ components:
           example: afnamegroep-abc123
         naam:
           title: naam
+          maxLength: 100
           minLength: 1
           type: string
-          description: <body><p>De naam van de afnamegroep zoals deze in het LAS is toegevoegd. Deze naam is maximaal 100 karakters lang.</p></body>
+          description: <body><p>De naam van de afnamegroep zoals deze in het LAS is toegevoegd. De waarde is maximaal 100 karakters lang.</p></body>
           example: Afnamegroepnaam01
         onderwijsorganisatie:
           $ref: '#/components/schemas/Onderwijsorganisatie'
@@ -4583,7 +4596,7 @@ components:
           title: achternaam
           minLength: 1
           type: string
-          description: "<body><p>Achternaam van de afnameleider, inclusief voorvoegsel.</p></body>"
+          description: "<body><p>Achternaam van de afnameleider, inclusief voorvoegsel. De waarde is maximaal 255 karakters lang.</p></body>"
           example: Achternaam01
         id:
           title: id
@@ -4608,7 +4621,7 @@ components:
           title: achternaam
           minLength: 1
           type: string
-          description: "<body><p>Achternaam van de corrector, inclusief voorvoegsel.</p></body>"
+          description: "<body><p>Achternaam van de corrector, inclusief voorvoegsel. De waarde is maximaal 255 karakters lang.</p></body>"
           example: Achternaam01
         id:
           title: id
@@ -4619,7 +4632,7 @@ components:
         roepnaam:
           title: roepnaam
           type: string
-          description: <body><p>Roepnaam van de corrector.</p></body>
+          description: <body><p>Roepnaam van de corrector. De waarde is maximaal 255 karakters lang.</p></body>
           nullable: true
           example: Roepnaam01
       description: <body><p>Verzameling van gegevens bij een corrector. Een corrector is de persoon die de vragen van een bepaald examen corrigeert volgens het correctievoorschrijft en per vraag de score bepaalt.</p></body>
@@ -5081,9 +5094,11 @@ components:
           example: faoserver-abc123
         examenlokaal:
           title: examenlokaal
+          maxLength: 50
           type: string
-          description: <body><p>Naam of code van lokaal of ruimte waarin examen wordt afgenomen.</p></body>
+          description: <body><p>Naam of code van lokaal of ruimte waarin examen wordt afgenomen. De waarde is maximaal 50 karakters lang.</p></body>
           nullable: true
+          example: lokaal-A.105
       description: <body><p>Verzameling van planningsgegevens bij een afnamegroep.</p></body>
     Resultaat:
       required:
@@ -5135,7 +5150,7 @@ components:
           type: string
           description: <body><p>De behaalde scorewaarde binnen de door het typelabel aangegeven scoretype.</p></body>
           example: "30"
-      description: "<body><p>Een individuele score. Alleen de definitieve score wordt uitgewisseld, dus geen score bij afgebroken afname en ook geen voorlopige score.</p></body>"
+      description: "<body><p>Een individuele score. Let op, alleen de definitieve score wordt uitgewisseld, dus geen score bij afgebroken afname en ook geen voorlopige score.</p></body>"
     Weergavekenmerken:
       required:
       - achternaam
@@ -5147,18 +5162,18 @@ components:
           title: achternaam
           minLength: 1
           type: string
-          description: "<body><p>De achternaam van de examenkandidaat die op het scherm wordt weergegeven, t.b.v. controle door de examenleider.</p></body>"
+          description: "<body><p>De achternaam van de examenkandidaat die op het scherm wordt weergegeven, t.b.v. controle door de examenleider. De waarde is maximaal 200 karakters lang.</p></body>"
           example: Achternaam01
         voornaam:
           title: voornaam
           minLength: 1
           type: string
-          description: "<body><p>De voornaam van de examenkandidaat die op het scherm wordt weergegeven, t.b.v. controle door de examenleider.</p></body>"
+          description: "<body><p>De voornaam van de examenkandidaat die op het scherm wordt weergegeven, t.b.v. controle door de examenleider. De waarde is maximaal 200 karakters lang.</p></body>"
           example: Voornaam01
         voorvoegsel:
           title: voorvoegsel
           type: string
-          description: "<body><p>Voorvoegsel bij de achternaam van de examenkandidaat die op het scherm wordt weergegeven, t.b.v. controle door de examenleider.</p></body>"
+          description: "<body><p>Voorvoegsel bij de achternaam van de examenkandidaat die op het scherm wordt weergegeven, t.b.v. controle door de examenleider. De waarde is maximaal 10 karakters lang.</p></body>"
           nullable: true
           example: van de
         weergaveidentiteit:
