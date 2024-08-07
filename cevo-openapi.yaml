@@ -2,19 +2,22 @@
 openapi: 3.0.0
 info:
   title: Centrale-Examens-VO
-  description: "<body><p>OAS3-definities op 10 november 2023 gemaakt n.a.v. het overleg tussen betrokkenen op 1 november en commentaren op versie 01.03.01, gebaseerd op de berichtenspecificaties en modellen Centrale Examens VO (CEVO) voor schooljaar 2023-2024.</p></body><body><p>Ten opzichte van voorgaande schooljaar zijn de wijzigingen:</p></body><ol><li>Attribuut examenlokaal bij Planningsgegevens binnen Afnamegroep toegevoegd,</li><li>Meerdere afnameleiders bij Afnamegroep mogelijk (tot maximaal 5),</li><li>Betreffende afnamegroepen in notificatie toegevoegd,</li><li>De lijst van afnamegroepen uit de notificatie als extra parameter in verzoek om scores/resultaten.</p></body>"
+  description: "<body><p>OAS3-definities op 22 juli 2024 gemaakt n.a.v. het overleg tussen betrokkenen op 8 juli en reviewcommentaren op het gemaakte voorstel, gebaseerd op de berichtenspecificaties en modellen Centrale Examens VO (CEVO) voor schooljaar 2024-2025.</p></body><body><p>Ten opzichte van voorgaande schooljaar zijn de wijzigingen:</p></body><ol><li>Attributen mutatietimestamp, geheimhouding, examentype, dos, spellingscontrole aan Examen toegevoegd,</li><li>Attributen typelabel en versie binnen Examen verwijderd,</li><li>Attributen mutatietimestamp en variantcode aan Examenvariant toegevoegd,</li><li>Attributen naam, typelabel en versie binnen Examenvariant verwijderd,</li><li>Attribuut maximumAantalVarianten aan Planninggegevens binnen Afnamegroep toegevoegd,</li><li>Meerdere onderwijsdeelnemeridentiteiten bij Resultatenscores mogelijk.</li></p></body>"
   contact:
     url: https://github.com/edustandaard/Centrale-Examens-VO
   license:
     name: "European Union Public License, version 1.2 (EUPL-1.2)"
     url: https://eupl.eu/1.2/nl/
-  version: 01.03.02
+  version: 01.04.01
   x-imvertor-generator-version: 2.0.0
   x-yamlCompiler-stylesheets-version: "20210605"
 servers:
-- url: https://facet.nl/api/centrale_examens_v1/v02
+# Added by API Auto Mocking Plugin
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/edustandaard/cevo/01.04.01
+- url: https://facet.nl/api/centrale_examens_v1/v04
   description: Facet API Auto Mocking
-- url: https://www.las-leverancier.nl/api/centrale_examens_v1/v02
+- url: https://www.las-leverancier.nl/api/centrale_examens_v1/v04
   description: LAS-leverancier Referentie-implementatie
 paths:
   /administraties:
@@ -4640,12 +4643,14 @@ components:
       required:
       - afnamecondities
       - correctieronden
+      - dos
+      - examentype
       - id
+      - mutatietimestamp
       - naam
       - niveau
-      - typelabel
+      - status
       - vakken
-      - versie
       type: object
       properties:
         afnamecondities:
@@ -4655,12 +4660,27 @@ components:
           type: integer
           description: "<body><p>Het aantal correctieronden van het examen; waarde is altijd 0, 1 of 2 (dus nooit meer dan 2).</p></body>"
           example: 2
+        dos:
+          title: dos
+          type: boolean
+          description: <body><p>Of het examen wel of niet voor doven en/of slechthorenden is.</p></body>
+        examentype:
+          $ref: '#/components/schemas/Examentype'
+        geheimhouding:
+          $ref: '#/components/schemas/Geheimhoudingtype'
         id:
           title: id
           minLength: 1
           type: string
           description: <body><p>Identificatie van het examen.</p></body><body><p>Minimaal uniek binnen de scope van deze gegevensuitwisselingen.</p></body>
           example: examen-abc123
+        mutatietimestamp:
+          title: mutatietimestamp
+          minLength: 1
+          type: string
+          description: <body><p>Versiedatum van examen met datumtijdstip van aanmaak of laatste wijziging.</p></body>
+          format: date-time
+          example: 2024-03-10T13:00:00Z
         naam:
           title: naam
           minLength: 1
@@ -4679,8 +4699,12 @@ components:
           description: <body><p>Omschrijving van het examen.</p></body>
           nullable: true
           example: Omschrijving01
-        typelabel:
-          $ref: '#/components/schemas/Examentype'
+        spellingscontrole:
+          title: spellingscontrole
+          type: boolean
+          description: <body><p>Of het examen wel of niet spellingscontrole als hulpmiddel heeft.</p></body>
+        status:
+          $ref: '#/components/schemas/Statustype'
         url:
           title: url
           type: string
@@ -4696,21 +4720,15 @@ components:
             pattern: "^[0-9]{4}$"
             type: string
             example: "1001"
-        versie:
-          title: versie
-          minLength: 1
-          type: string
-          description: <body><p>Versie van het examen.</p></body>
-          example: Versie01
       description: "<body><p>Verzameling van gegevens bij een examen. Let op, de eigenschap niveau geeft het niveau van het examen aan.</p></body>"
     Examenvariant:
       required:
       - examencijferberekening
       - id
       - isvariantvan
-      - naam
-      - typelabel
-      - versie
+      - mutatietimestamp
+      - omschrijving
+      - variantcode
       type: object
       properties:
         examencijferberekening:
@@ -4726,11 +4744,18 @@ components:
           type: string
           description: <body><p>Verwijzing naar het examen van de examenvariant.</p></body>
           example: examen-abc123
-        naam:
-          title: naam
+        mutatietimestamp:
+          title: mutatietimestamp
           minLength: 1
           type: string
-          description: <body><p>Naam van de examenvariant.</p></body>
+          description: <body><p>Versiedatum van examenvariant met datumtijdstip van aanmaak of laatste wijziging.</p></body>
+          format: date-time
+          example: 2024-03-10T13:00:00Z
+        omschrijving:
+          title: omschrijving
+          minLength: 1
+          type: string
+          description: <body><p>Omschrijving/naam van de examenvariant.</p></body>
         necode:
           title: necode
           pattern: "^[0-9]{5}$"
@@ -4738,24 +4763,17 @@ components:
           description: "<body><p>NE-code is een extra code die optioneel kan worden toegevoegd aan een Examenvariant. Deze NE-code is relevant om koppeling te kunnen houden met het WOI-bestand Wolf.</p></body><body><p>NE-code (aka nex_id), bestaat uit 5 cijfers.</p></body>"
           nullable: true
           example: "21101"
-        omschrijving:
-          title: omschrijving
-          type: string
-          description: <body><p>Omschrijving van de examenvariant.</p></body>
-          nullable: true
-        typelabel:
-          $ref: '#/components/schemas/Examenvarianttype'
         url:
           title: url
           type: string
           description: <body><p>Url naar verdere informatie over de examenvariant.</p></body>
           format: uri
           nullable: true
-        versie:
-          title: versie
+        variantcode:
+          title: variantcode
           minLength: 1
           type: string
-          description: <body><p>Versie van de examenvariant.</p></body>
+          description: "<body><p>Codering van de examenvariant, bijvoorbeeld Rood, Blauw, V01 of V07.</p></body>"
       description: <body><p>Variant van het examen met een eigen normering.</p></body>
     Faoserver:
       required:
@@ -4813,7 +4831,9 @@ components:
           description: <body><p>Identifier van de verzameling scores en resultaten.</p></body><body><p>Minimaal uniek binnen de scope van deze gegevensuitwisselingen.</p></body>
           example: resultatenscores-abc123
         onderwijsdeelnemeridentiteit:
-          $ref: '#/components/schemas/Onderwijsdeelnemeridentiteit'
+          type: array
+          items:
+            $ref: '#/components/schemas/Onderwijsdeelnemeridentiteit'
         resultaat:
           $ref: '#/components/schemas/Resultaat'
         score:
@@ -5099,6 +5119,8 @@ components:
           description: <body><p>Naam of code van lokaal of ruimte waarin examen wordt afgenomen. De waarde is maximaal 50 karakters lang.</p></body>
           nullable: true
           example: lokaal-A.105
+        maximumAantalVarianten:
+          $ref: '#/components/schemas/MaxAantalVariantentype'
       description: <body><p>Verzameling van planningsgegevens bij een afnamegroep.</p></body>
     Resultaat:
       required:
@@ -5229,11 +5251,13 @@ components:
       - POSTTEST
       - VOORBEELDEXAMEN
       - AANGEWEZEN
-    Examenvarianttype:
+    Geheimhoudingtype:
       type: string
-      description: <body><p>Waardelijst voor typering van de examenvariant.</p></body>
+      description: <body><p>Waardelijst voor geheimhoudingstypering van het examen.</p></body>
       enum:
-      - Examenvariant
+      - CALAMITEIT
+      - AANGEWEZEN
+      - GEHEIM
     Geslachttype:
       type: string
       description: <body><p>Waardelijst voor geslacht van de examenkandidaat.</p></body><body><ul><li>`M` - Man </li><li>`V` - Vrouw </li><li>`O` - Ontbrekend / Niet gespecificeerd </li></ul></body>
@@ -5257,6 +5281,21 @@ components:
       - "4"
       - "5"
       - "6"
+    MaxAantalVariantentype:
+      type: string
+      description: <body><p>Waardelijst voor maximaal aantal gewenste varianten van examen.</p></body>
+      enum:
+      - "1"
+      - "2"
+      - "3"
+      - "ALLE"
+    Statustype:
+      type: string
+      description: <body><p>Waardelijst voor status van examen.</p></body>
+      enum:
+      - PILOT
+      - REGULIER
+      - BEZEM
     BadRequestFoutbericht:
       allOf:
       - $ref: '#/components/schemas/Foutbericht'
