@@ -2,20 +2,20 @@
 openapi: 3.0.0
 info:
   title: Centrale-Examens-VO
-  description: "<body><p>OAS3-definities op 22 juli 2024 gemaakt n.a.v. het overleg tussen betrokkenen op 8 juli en reviewcommentaren op het gemaakte voorstel, gebaseerd op de berichtenspecificaties en modellen Centrale Examens VO (CEVO) voor schooljaar 2024-2025.</p></body><body><p>Ten opzichte van voorgaande schooljaar zijn de wijzigingen:</p></body><ol><li>Attributen mutatietimestamp, geheimhouding, examentype, dos, spellingscontrole aan Examen toegevoegd,</li><li>Attributen typelabel en versie binnen Examen verwijderd,</li><li>Attributen mutatietimestamp en variantcode aan Examenvariant toegevoegd,</li><li>Attributen naam, typelabel en versie binnen Examenvariant verwijderd,</li><li>Attribuut maximumAantalVarianten aan Planninggegevens binnen Afnamegroep toegevoegd,</li><li>Meerdere onderwijsdeelnemeridentiteiten bij Resultatenscores mogelijk.</li></p></body>"
+  description: "<body><p>OAS3-definities op 23 september 2024 gemaakt n.a.v. het overleg tussen betrokkenen op 8 juli en reviewcommentaren op het gemaakte voorstel, gebaseerd op de berichtenspecificaties en modellen Centrale Examens VO (CEVO) voor schooljaar 2024-2025.</p></body><body><p>Ten opzichte van voorgaande schooljaar zijn de wijzigingen:</p><ol><li>Attributen mutatiemoment, geheimhouding, examentype, dos, spellingscontrole en fallback aan object Examen toegevoegd, en attributen typelabel en versie uit Examen verwijderd,</li><li>Enumeratie ExamenStatustype toegevoegd (t.b.v. attribuut status binnen object Examen),</li><li>Enumeratie Geheimhoudingtype toegevoegd (t.b.v. attribuut geheimhouding binnen object Examen),</li><li>Waarde AANGEWEZEN uit enumeratie Examentype verwijderd,</li><li>Attributen mutatiemoment en variantcode aan object Examenvariant toegevoegd, en attributen naam, typelabel en versie uit Examenvariant verwijderd,</li><li>Attribuut maximumAantalVarianten aan object Planningsgegevens binnen object Afnamegroep toegevoegd,</li><li>Enumeratie MaxAantalVariantentype toegevoegd (t.b.v. attribuut maximumAantalVarianten binnen object Planningsgegevens),</li><li>Meerdere onderwijsdeelnemeridentiteiten bij Resultatenscores mogelijk.</li></ol></body>"
   contact:
     url: https://github.com/edustandaard/Centrale-Examens-VO
   license:
     name: "European Union Public License, version 1.2 (EUPL-1.2)"
     url: https://eupl.eu/1.2/nl/
-  version: 01.04.01
-  x-imvertor-generator-version: 2.0.0
+  version: 01.04.02
+  x-imvertor-generator-version: 4.1.2
   x-yamlCompiler-stylesheets-version: "20210605"
 servers:
 # Added by API Auto Mocking Plugin
 - description: SwaggerHub API Auto Mocking
-  url: https://virtserver.swaggerhub.com/edustandaard/cevo/01.04.01
-- url: https://facet.nl/api/centrale_examens_v1/v04
+  url: https://virtserver.swaggerhub.com/edustandaard/cevo/01.04.02
+- url: https://ac1-m2m.test-facet.onl/vo/api/v3/
   description: Facet API Auto Mocking
 - url: https://www.las-leverancier.nl/api/centrale_examens_v1/v04
   description: LAS-leverancier Referentie-implementatie
@@ -1127,7 +1127,7 @@ paths:
         schema:
           pattern: "^(\\\\d|\\\\D){20}$"
           type: string
-        example: 0000000700011BB00000
+          example: 0000000700011BB00000
       - name: edu-from
         in: query
         description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
@@ -1137,7 +1137,7 @@ paths:
         schema:
           pattern: "^(\\\\d|\\\\D){20}$"
           type: string
-        example: 0000000700011BB00530
+          example: 0000000700011BB00530
       requestBody:
         content:
           application/json:
@@ -4013,7 +4013,7 @@ paths:
           example: examen-abc123
       - name: afnamegroepids
         in: query
-        description: <body><p>De identificaties van de afnamegroepen die de gevraagde scores en resultaten betreffen.</p></body>
+        description: <body><p>De identificaties van afnamegroepen die de gevraagde scores en resultaten betreffen.</p></body>
         required: false
         style: form
         explode: false
@@ -4272,7 +4272,7 @@ paths:
         schema:
           pattern: "^[0-9]{2}[A-Z]{2}$"
           type: string
-        example: 99XX
+          example: 99XX
       - name: administratienr
         in: query
         description: <body><p>Volgnummer dat wordt gebruikt om de administratie binnen de instellingscode (BRIN4) te duiden. De waarde van dit administratienummer kan overeenkomen met de waarde van een vestigingscode maar dat hoeft niet.</p></body><body><p>De waarde is code van 2 cijfers.</p></body>
@@ -4282,7 +4282,7 @@ paths:
         schema:
           pattern: "^[0-9]{2}$"
           type: string
-        example: "00"
+          example: "00"
       - name: edu-to
         in: query
         description: "<body><p>Dit geeft aan namens welke school het LAS het bericht ontvangt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
@@ -4292,7 +4292,7 @@ paths:
         schema:
           pattern: "^(\\\\d|\\\\D){20}$"
           type: string
-        example: "00000007000118900534"
+          example: "00000007000118900534"
       - name: edu-from
         in: query
         description: "<body><p>Dit geeft aan namens welke organisatie Facet het bericht verzendt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
@@ -4302,7 +4302,7 @@ paths:
         schema:
           pattern: "^(\\\\d|\\\\D){20}$"
           type: string
-        example: 481057013760
+          example: 481057013760
       requestBody:
         content:
           application/json:
@@ -4548,6 +4548,7 @@ components:
           type: array
           description: <body><p>Verwijzingen naar de afnameleiders van de afnamegroep. Meerdere afnameleiders geeft de mogelijkheid om in het geval van afwezigheid van de eerste afnameleider sneller tot een oplossing te komen rondom de afname. Totdat de functionaliteit is verwerkt in Facet zal alleen de eerstgenoemde afnameleider worden gebruikt. </p></body>
           items:
+            minLength: 1
             type: string
             example: afnameleider-abc123
         corrector1:
@@ -4645,10 +4646,12 @@ components:
       - correctieronden
       - dos
       - examentype
+      - fallback
       - id
-      - mutatietimestamp
+      - mutatiemoment
       - naam
       - niveau
+      - spellingscontrole
       - status
       - vakken
       type: object
@@ -4664,8 +4667,15 @@ components:
           title: dos
           type: boolean
           description: <body><p>Of het examen wel of niet voor doven en/of slechthorenden is.</p></body>
+          example: true
         examentype:
           $ref: '#/components/schemas/Examentype'
+        fallback:
+          title: fallback
+          type: boolean
+          description: <body><p>Of het examen wel of niet voor fallback is. De fallback-examens worden ingezet indien de afname in Facet onverhoopt niet werkt.</p><p>Fallback-examens zijn alleen belangrijk voor Cito/CvTE, de LAS'en zouden fallback-examens moeten negeren. Fallback-examens zijn niet planbaar.</p></body>
+          nullable: true
+          example: true
         geheimhouding:
           $ref: '#/components/schemas/Geheimhoudingtype'
         id:
@@ -4674,8 +4684,8 @@ components:
           type: string
           description: <body><p>Identificatie van het examen.</p></body><body><p>Minimaal uniek binnen de scope van deze gegevensuitwisselingen.</p></body>
           example: examen-abc123
-        mutatietimestamp:
-          title: mutatietimestamp
+        mutatiemoment:
+          title: mutatiemoment
           minLength: 1
           type: string
           description: <body><p>Versiedatum van examen met datumtijdstip van aanmaak of laatste wijziging.</p></body>
@@ -4703,8 +4713,9 @@ components:
           title: spellingscontrole
           type: boolean
           description: <body><p>Of het examen wel of niet spellingscontrole als hulpmiddel heeft.</p></body>
+          example: true
         status:
-          $ref: '#/components/schemas/Statustype'
+          $ref: '#/components/schemas/ExamenStatustype'
         url:
           title: url
           type: string
@@ -4726,7 +4737,7 @@ components:
       - examencijferberekening
       - id
       - isvariantvan
-      - mutatietimestamp
+      - mutatiemoment
       - omschrijving
       - variantcode
       type: object
@@ -4738,31 +4749,33 @@ components:
           minLength: 1
           type: string
           description: <body><p>Identificatie van de examenvariant.</p></body><body><p>Minimaal uniek binnen de scope van deze gegevensuitwisselingen.</p></body>
+          example: examenvariant-abc123
         isvariantvan:
           title: isvariantvan
           minLength: 1
           type: string
           description: <body><p>Verwijzing naar het examen van de examenvariant.</p></body>
           example: examen-abc123
-        mutatietimestamp:
-          title: mutatietimestamp
+        mutatiemoment:
+          title: mutatiemoment
           minLength: 1
           type: string
           description: <body><p>Versiedatum van examenvariant met datumtijdstip van aanmaak of laatste wijziging.</p></body>
           format: date-time
-          example: 2024-03-10T13:00:00Z
-        omschrijving:
-          title: omschrijving
-          minLength: 1
-          type: string
-          description: <body><p>Omschrijving/naam van de examenvariant.</p></body>
+          example: 2024-09-05T17:48:00Z
         necode:
           title: necode
           pattern: "^[0-9]{5}$"
           type: string
           description: "<body><p>NE-code is een extra code die optioneel kan worden toegevoegd aan een Examenvariant. Deze NE-code is relevant om koppeling te kunnen houden met het WOI-bestand Wolf.</p></body><body><p>NE-code (aka nex_id), bestaat uit 5 cijfers.</p></body>"
           nullable: true
-          example: "21101"
+          example: "24101"
+        omschrijving:
+          title: omschrijving
+          minLength: 1
+          type: string
+          description: <body><p>Omschrijving/naam van examenvariant.</p></body>
+          example: Variantomschrijving01
         url:
           title: url
           type: string
@@ -4774,6 +4787,7 @@ components:
           minLength: 1
           type: string
           description: "<body><p>Codering van de examenvariant, bijvoorbeeld Rood, Blauw, V01 of V07.</p></body>"
+          example: "V01"
       description: <body><p>Variant van het examen met een eigen normering.</p></body>
     Faoserver:
       required:
@@ -4793,7 +4807,7 @@ components:
           type: string
           description: <body><p>De naam van de FAO-server.</p></body>
           example: Faoservernaam01
-      description: <body><p>Verzameling van gegevens bij een FAO-server. FAO staat voor Facet afname offline. Een FAO-server is een afnameserver die bij de onderwijslocatie/instelling is ge??nstalleerd en waarop de offline afnames worden afgenomen.</p></body>
+      description: <body><p>Verzameling van gegevens bij een FAO-server. FAO staat voor Facet afname offline. Een FAO-server is een afnameserver die bij de onderwijslocatie/instelling is geïnstalleerd en waarop de offline afnames worden afgenomen.</p></body>
     Resultatenscores:
       required:
       - examen
@@ -4845,20 +4859,21 @@ components:
       - examen
       type: object
       properties:
+        afnamegroepids:
+          title: afnamegroepids
+          minItems: 1
+          type: array
+          description: <body><p>Verwijzingen naar de afnamegroepen die bij deze notificatie over de resultatenscores zijn betrokken.</p></body>
+          items:
+            minLength: 1
+            type: string
+            example: afnamegroep-abc123
         examen:
           title: examen
           minLength: 1
           type: string
           description: <body><p>Verwijzing naar het examen van de resultatenscores-notificatie.</p></body>
           example: examen-abc123
-        afnamegroepids:
-          title: afnamegroepids
-          minItems: 1
-          type: array
-          description: <body><p>Verwijzingen naar de afnamegroepen die bij deze notificatie over de resultatenscores zijn betrokken. </p></body>
-          items:
-            type: string
-            example: afnamegroep-abc123
       description: <body><p>De notificatie over scores en resultaten van een specifiek examen.</p></body>
     Afname:
       required:
@@ -5106,12 +5121,6 @@ components:
           format: date-time
         afnamesoort:
           $ref: '#/components/schemas/Afnamesoort'
-        faoserver:
-          title: faoserver
-          type: string
-          description: <body><p>Verwijzing naar de FAO-server van de afnamegroep middels diens id. FAO staat voor Facet afname offline. Iedere offline afname moet uiteindelijk een FAO-server hebben gekoppeld.</p></body>
-          nullable: true
-          example: faoserver-abc123
         examenlokaal:
           title: examenlokaal
           maxLength: 50
@@ -5119,6 +5128,12 @@ components:
           description: <body><p>Naam of code van lokaal of ruimte waarin examen wordt afgenomen. De waarde is maximaal 50 karakters lang.</p></body>
           nullable: true
           example: lokaal-A.105
+        faoserver:
+          title: faoserver
+          type: string
+          description: <body><p>Verwijzing naar de FAO-server van de afnamegroep middels diens id. FAO staat voor Facet afname offline. Iedere offline afname moet uiteindelijk een FAO-server hebben gekoppeld.</p></body>
+          nullable: true
+          example: faoserver-abc123
         maximumAantalVarianten:
           $ref: '#/components/schemas/MaxAantalVariantentype'
       description: <body><p>Verzameling van planningsgegevens bij een afnamegroep.</p></body>
@@ -5238,9 +5253,16 @@ components:
       description: <body><p>Waardelijst voor duiding van het type score.</p></body>
       enum:
       - VO Examenscore
+    ExamenStatustype:
+      type: string
+      description: <body><p>Waardelijst voor typering van status van examen.</p></body><body><ul><li>`BEZEM` - Bezemexamen </li><li>`PILOT` - Pilot examen </li><li>`REGULIER` - Regulier examen </li></ul></body>
+      enum:
+      - PILOT
+      - REGULIER
+      - BEZEM
     Examentype:
       type: string
-      description: <body><p>Waardelijst voor typering van het examen.</p></body>
+      description: <body><p>Waardelijst voor typering van examen.</p></body>
       enum:
       - CBT
       - CPE
@@ -5250,10 +5272,9 @@ components:
       - PRETEST
       - POSTTEST
       - VOORBEELDEXAMEN
-      - AANGEWEZEN
     Geheimhoudingtype:
       type: string
-      description: <body><p>Waardelijst voor geheimhoudingstypering van het examen.</p></body>
+      description: <body><p>Waardelijst voor geheimhoudingstypering van examen.</p></body><body><ul><li>`AANGEWEZEN` - Aangewezen examen </li><li>`CALAMITEIT` - Examen voor calamiteiten </li><li>`GEHEIM` - Geheim examen </li></ul></body>
       enum:
       - CALAMITEIT
       - AANGEWEZEN
@@ -5283,19 +5304,12 @@ components:
       - "6"
     MaxAantalVariantentype:
       type: string
-      description: <body><p>Waardelijst voor maximaal aantal gewenste varianten van examen.</p></body>
+      description: <body><p>Waardelijst voor maximaal aantal gewenste varianten van examen.</p></body><body><ul><li>`1` - 1 variant </li><li>`2` - 2 varianten </li><li>`3` - 3 varianten </li><li>`ALLE` - Alle varianten </li></ul></body>
       enum:
       - "1"
       - "2"
       - "3"
       - "ALLE"
-    Statustype:
-      type: string
-      description: <body><p>Waardelijst voor status van examen.</p></body>
-      enum:
-      - PILOT
-      - REGULIER
-      - BEZEM
     BadRequestFoutbericht:
       allOf:
       - $ref: '#/components/schemas/Foutbericht'
