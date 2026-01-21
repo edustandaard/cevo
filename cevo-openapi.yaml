@@ -2,22 +2,20 @@
 openapi: 3.0.0
 info:
   title: Centrale-Examens-VO
-  description: "<body><p>OAS3-definities op 23 september 2024 gemaakt n.a.v. het overleg tussen betrokkenen op 8 juli en reviewcommentaren op het gemaakte voorstel, gebaseerd op de berichtenspecificaties en modellen Centrale Examens VO (CEVO) voor schooljaar 2024-2025.</p></body><body><p>Ten opzichte van voorgaande schooljaar zijn de wijzigingen:</p><ol><li>Attributen mutatiemoment, geheimhouding, examentype, dos, spellingscontrole en fallback aan object Examen toegevoegd, en attributen typelabel en versie uit Examen verwijderd,</li><li>Enumeratie ExamenStatustype toegevoegd (t.b.v. attribuut status binnen object Examen),</li><li>Enumeratie Geheimhoudingtype toegevoegd (t.b.v. attribuut geheimhouding binnen object Examen),</li><li>Waarde AANGEWEZEN uit enumeratie Examentype verwijderd,</li><li>Attributen mutatiemoment en variantcode aan object Examenvariant toegevoegd, en attributen naam, typelabel en versie uit Examenvariant verwijderd,</li><li>Attribuut maximumAantalVarianten aan object Planningsgegevens binnen object Afnamegroep toegevoegd,</li><li>Enumeratie MaxAantalVariantentype toegevoegd (t.b.v. attribuut maximumAantalVarianten binnen object Planningsgegevens),</li><li>Meerdere onderwijsdeelnemeridentiteiten bij Resultatenscores mogelijk.</li></ol></body>"
+  description: "<body><p>OAS3-definities op 6 januari 2026 gemaakt n.a.v. het overleg tussen betrokkenen in november en december 2025, gebaseerd op de berichtenspecificaties en modellen Centrale Examens VO (CEVO).</p></body> <body><p>Ten opzichte van voorgaande versie 01.04.02 zijn de wijzigingen:</p></body><ol><li>Attribuut rijksdelen bij resource Examen toegevoegd,</li><li>Attribuut inplanbaarVanaf binnen resource Examen gewijzigd (was inplanbaar),</li><li>Tekstpatroon (regex pattern) bij edu-to en edu-from parameters is specifieker gemaakt,</li><li>Attribuut url uit resource Examen en resource Examenvariant verwijderd,</li><li>Attribuut afnamestatus in groep Afname binnen resource Resultatenscores toegevoegd.</p></body>"
   contact:
     url: https://github.com/edustandaard/Centrale-Examens-VO
   license:
     name: "European Union Public License, version 1.2 (EUPL-1.2)"
     url: https://eupl.eu/1.2/nl/
-  version: 01.04.02
-  x-imvertor-generator-version: 4.1.2
-  x-yamlCompiler-stylesheets-version: "20210605"
+  version: 04.01.01
 servers:
 # Added by API Auto Mocking Plugin
 - description: SwaggerHub API Auto Mocking
-  url: https://virtserver.swaggerhub.com/edustandaard/cevo/01.04.02
-- url: https://ac1-m2m.test-facet.onl/vo/api/v3/
+  url: https://virtserver.swaggerhub.com/edustandaard/cevo/04.01.01
+- url: https://ac1-m2m.test-facet.onl/vo/api/v4/
   description: Facet API Auto Mocking
-- url: https://www.las-leverancier.nl/api/centrale_examens_v1/v04
+- url: https://www.las-leverancier.nl/api/centrale_examens_v4
   description: LAS-leverancier Referentie-implementatie
 paths:
   /administraties:
@@ -39,22 +37,22 @@ paths:
           example: 99XX
       - name: edu-to
         in: query
-        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -91,10 +89,10 @@ paths:
                 title: Ten minste één parameter moet worden opgegeven.
                 status: 400
                 detail: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modification.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: paramsRequired
                 invalidParams:
-                - type: https://www.edustandaard.nl/amigo/api/validaties/integer
+                - type: https://www.edustandaard.nl/cevo/api/validaties/integer
                   name: score
                   code: integer
                   reason: Waarde is geen geldige integer.
@@ -112,7 +110,7 @@ paths:
                 title: Niet correct geauthenticeerd.
                 status: 401
                 detail: The request requires user authentication. The response MUST include a WWW-Authenticate header field (section 14.47) containing a challenge applicable to the requested resource.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: authentication
         "403":
           description: Forbidden
@@ -128,7 +126,7 @@ paths:
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
                 detail: "The server understood the request, but is refusing to fulfill it."
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
           description: Conflict
@@ -144,7 +142,7 @@ paths:
                 title: Conflict
                 status: 409
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: conflict
         "410":
           description: Gone
@@ -160,7 +158,7 @@ paths:
                 title: Gone
                 status: 410
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: gone
         "415":
           description: Unsupported Media Type
@@ -176,7 +174,7 @@ paths:
                 title: Unsupported Media Type
                 status: 415
                 detail: The server is refusing the request because the entity of the request is in a format not supported by the requested resource for the requested method.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: unsupported
         "429":
           description: Too Many Requests
@@ -192,7 +190,7 @@ paths:
                 title: Too many request
                 status: 429
                 detail: The user has sent too many requests in a given amount of time (rate limiting).
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: tooManyRequests
         "500":
           description: Internal Server Error
@@ -208,7 +206,7 @@ paths:
                 title: Interne server fout.
                 status: 500
                 detail: The server encountered an unexpected condition which prevented it from fulfilling the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: serverError
         "501":
           description: Not Implemented
@@ -224,7 +222,7 @@ paths:
                 title: Not Implemented
                 status: 501
                 detail: The server does not support the functionality required to fulfill the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notImplemented
         "503":
           description: Service Unavailable
@@ -240,7 +238,7 @@ paths:
                 title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notAvailable
         default:
           description: Er is een onverwachte fout opgetreden
@@ -280,22 +278,22 @@ paths:
           example: "00"
       - name: edu-to
         in: query
-        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -332,10 +330,10 @@ paths:
                 title: Ten minste één parameter moet worden opgegeven.
                 status: 400
                 detail: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modification.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: paramsRequired
                 invalidParams:
-                - type: https://www.edustandaard.nl/amigo/api/validaties/integer
+                - type: https://www.edustandaard.nl/cevo/api/validaties/integer
                   name: score
                   code: integer
                   reason: Waarde is geen geldige integer.
@@ -353,7 +351,7 @@ paths:
                 title: Niet correct geauthenticeerd.
                 status: 401
                 detail: The request requires user authentication. The response MUST include a WWW-Authenticate header field (section 14.47) containing a challenge applicable to the requested resource.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: authentication
         "403":
           description: Forbidden
@@ -369,7 +367,7 @@ paths:
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
                 detail: "The server understood the request, but is refusing to fulfill it."
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
           description: Conflict
@@ -385,7 +383,7 @@ paths:
                 title: Conflict
                 status: 409
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: conflict
         "410":
           description: Gone
@@ -401,7 +399,7 @@ paths:
                 title: Gone
                 status: 410
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: gone
         "415":
           description: Unsupported Media Type
@@ -417,7 +415,7 @@ paths:
                 title: Unsupported Media Type
                 status: 415
                 detail: The server is refusing the request because the entity of the request is in a format not supported by the requested resource for the requested method.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: unsupported
         "429":
           description: Too Many Requests
@@ -433,7 +431,7 @@ paths:
                 title: Too many request
                 status: 429
                 detail: The user has sent too many requests in a given amount of time (rate limiting).
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: tooManyRequests
         "500":
           description: Internal Server Error
@@ -449,7 +447,7 @@ paths:
                 title: Interne server fout.
                 status: 500
                 detail: The server encountered an unexpected condition which prevented it from fulfilling the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: serverError
         "501":
           description: Not Implemented
@@ -465,7 +463,7 @@ paths:
                 title: Not Implemented
                 status: 501
                 detail: The server does not support the functionality required to fulfill the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notImplemented
         "503":
           description: Service Unavailable
@@ -481,7 +479,7 @@ paths:
                 title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notAvailable
         default:
           description: Er is een onverwachte fout opgetreden
@@ -500,22 +498,22 @@ paths:
       parameters:
       - name: edu-to
         in: query
-        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
         example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
         example: 0000000700011BB00530
       requestBody:
@@ -637,10 +635,10 @@ paths:
                 title: Ten minste één parameter moet worden opgegeven.
                 status: 400
                 detail: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modification.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: paramsRequired
                 invalidParams:
-                - type: https://www.edustandaard.nl/amigo/api/validaties/integer
+                - type: https://www.edustandaard.nl/cevo/api/validaties/integer
                   name: score
                   code: integer
                   reason: Waarde is geen geldige integer.
@@ -658,7 +656,7 @@ paths:
                 title: Niet correct geauthenticeerd.
                 status: 401
                 detail: The request requires user authentication. The response MUST include a WWW-Authenticate header field (section 14.47) containing a challenge applicable to the requested resource.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: authentication
         "403":
           description: Forbidden
@@ -674,7 +672,7 @@ paths:
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
                 detail: "The server understood the request, but is refusing to fulfill it."
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
           description: Conflict
@@ -690,7 +688,7 @@ paths:
                 title: Conflict
                 status: 409
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: conflict
         "410":
           description: Gone
@@ -706,7 +704,7 @@ paths:
                 title: Gone
                 status: 410
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: gone
         "415":
           description: Unsupported Media Type
@@ -722,7 +720,7 @@ paths:
                 title: Unsupported Media Type
                 status: 415
                 detail: The server is refusing the request because the entity of the request is in a format not supported by the requested resource for the requested method.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: unsupported
         "429":
           description: Too Many Requests
@@ -738,7 +736,7 @@ paths:
                 title: Too many request
                 status: 429
                 detail: The user has sent too many requests in a given amount of time (rate limiting).
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: tooManyRequests
         "500":
           description: Internal Server Error
@@ -754,7 +752,7 @@ paths:
                 title: Interne server fout.
                 status: 500
                 detail: The server encountered an unexpected condition which prevented it from fulfilling the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: serverError
         "501":
           description: Not Implemented
@@ -770,7 +768,7 @@ paths:
                 title: Not Implemented
                 status: 501
                 detail: The server does not support the functionality required to fulfill the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notImplemented
         "503":
           description: Service Unavailable
@@ -786,7 +784,7 @@ paths:
                 title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notAvailable
         default:
           description: Er is een onverwachte fout opgetreden
@@ -815,22 +813,22 @@ paths:
           example: afnamegroep-abc123
       - name: edu-to
         in: query
-        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -865,10 +863,10 @@ paths:
                 title: Ten minste één parameter moet worden opgegeven.
                 status: 400
                 detail: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modification.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: paramsRequired
                 invalidParams:
-                - type: https://www.edustandaard.nl/amigo/api/validaties/integer
+                - type: https://www.edustandaard.nl/cevo/api/validaties/integer
                   name: score
                   code: integer
                   reason: Waarde is geen geldige integer.
@@ -886,7 +884,7 @@ paths:
                 title: Niet correct geauthenticeerd.
                 status: 401
                 detail: The request requires user authentication. The response MUST include a WWW-Authenticate header field (section 14.47) containing a challenge applicable to the requested resource.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: authentication
         "403":
           description: Forbidden
@@ -902,7 +900,7 @@ paths:
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
                 detail: "The server understood the request, but is refusing to fulfill it."
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: autorisation
         "404":
           description: Not Found
@@ -918,7 +916,7 @@ paths:
                 title: Opgevraagde resource bestaat niet.
                 status: 404
                 detail: The server has not found anything matching the Request-URI.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notFound
         "409":
           description: Conflict
@@ -934,7 +932,7 @@ paths:
                 title: Conflict
                 status: 409
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: conflict
         "410":
           description: Gone
@@ -950,7 +948,7 @@ paths:
                 title: Gone
                 status: 410
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: gone
         "415":
           description: Unsupported Media Type
@@ -966,7 +964,7 @@ paths:
                 title: Unsupported Media Type
                 status: 415
                 detail: The server is refusing the request because the entity of the request is in a format not supported by the requested resource for the requested method.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: unsupported
         "429":
           description: Too Many Requests
@@ -982,7 +980,7 @@ paths:
                 title: Too many request
                 status: 429
                 detail: The user has sent too many requests in a given amount of time (rate limiting).
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: tooManyRequests
         "500":
           description: Internal Server Error
@@ -998,7 +996,7 @@ paths:
                 title: Interne server fout.
                 status: 500
                 detail: The server encountered an unexpected condition which prevented it from fulfilling the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: serverError
         "501":
           description: Not Implemented
@@ -1014,7 +1012,7 @@ paths:
                 title: Not Implemented
                 status: 501
                 detail: The server does not support the functionality required to fulfill the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notImplemented
         "503":
           description: Service Unavailable
@@ -1030,7 +1028,7 @@ paths:
                 title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notAvailable
         default:
           description: Er is een onverwachte fout opgetreden
@@ -1058,22 +1056,22 @@ paths:
           example: afnamegroep-abc123
       - name: edu-to
         in: query
-        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\d|\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\d|\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -1101,7 +1099,7 @@ paths:
                 title: Opgevraagde resource bestaat niet.
                 status: 404
                 detail: The server has not found anything matching the Request-URI.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notFound
     patch:
       tags:
@@ -1120,22 +1118,22 @@ paths:
           example: afnamegroep-abc123
       - name: edu-to
         in: query
-        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00530
       requestBody:
@@ -1175,10 +1173,10 @@ paths:
                 title: Ten minste één parameter moet worden opgegeven.
                 status: 400
                 detail: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modification.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: paramsRequired
                 invalidParams:
-                - type: https://www.edustandaard.nl/amigo/api/validaties/integer
+                - type: https://www.edustandaard.nl/cevo/api/validaties/integer
                   name: score
                   code: integer
                   reason: Waarde is geen geldige integer.
@@ -1196,7 +1194,7 @@ paths:
                 title: Niet correct geauthenticeerd.
                 status: 401
                 detail: The request requires user authentication. The response MUST include a WWW-Authenticate header field (section 14.47) containing a challenge applicable to the requested resource.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: authentication
         "403":
           description: Forbidden
@@ -1212,7 +1210,7 @@ paths:
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
                 detail: "The server understood the request, but is refusing to fulfill it."
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
           description: Conflict
@@ -1228,7 +1226,7 @@ paths:
                 title: Conflict
                 status: 409
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: conflict
         "410":
           description: Gone
@@ -1244,7 +1242,7 @@ paths:
                 title: Gone
                 status: 410
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: gone
         "415":
           description: Unsupported Media Type
@@ -1260,7 +1258,7 @@ paths:
                 title: Unsupported Media Type
                 status: 415
                 detail: The server is refusing the request because the entity of the request is in a format not supported by the requested resource for the requested method.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: unsupported
         "429":
           description: Too Many Requests
@@ -1276,7 +1274,7 @@ paths:
                 title: Too many request
                 status: 429
                 detail: The user has sent too many requests in a given amount of time (rate limiting).
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: tooManyRequests
         "500":
           description: Internal Server Error
@@ -1292,7 +1290,7 @@ paths:
                 title: Interne server fout.
                 status: 500
                 detail: The server encountered an unexpected condition which prevented it from fulfilling the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: serverError
         "501":
           description: Not Implemented
@@ -1308,7 +1306,7 @@ paths:
                 title: Not Implemented
                 status: 501
                 detail: The server does not support the functionality required to fulfill the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notImplemented
         "503":
           description: Service Unavailable
@@ -1324,7 +1322,7 @@ paths:
                 title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notAvailable
         default:
           description: Er is een onverwachte fout opgetreden
@@ -1364,22 +1362,22 @@ paths:
           example: "00"
       - name: edu-to
         in: query
-        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -1416,10 +1414,10 @@ paths:
                 title: Ten minste één parameter moet worden opgegeven.
                 status: 400
                 detail: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modification.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: paramsRequired
                 invalidParams:
-                - type: https://www.edustandaard.nl/amigo/api/validaties/integer
+                - type: https://www.edustandaard.nl/cevo/api/validaties/integer
                   name: score
                   code: integer
                   reason: Waarde is geen geldige integer.
@@ -1437,7 +1435,7 @@ paths:
                 title: Niet correct geauthenticeerd.
                 status: 401
                 detail: The request requires user authentication. The response MUST include a WWW-Authenticate header field (section 14.47) containing a challenge applicable to the requested resource.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: authentication
         "403":
           description: Forbidden
@@ -1453,7 +1451,7 @@ paths:
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
                 detail: "The server understood the request, but is refusing to fulfill it."
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
           description: Conflict
@@ -1469,7 +1467,7 @@ paths:
                 title: Conflict
                 status: 409
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: conflict
         "410":
           description: Gone
@@ -1485,7 +1483,7 @@ paths:
                 title: Gone
                 status: 410
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: gone
         "415":
           description: Unsupported Media Type
@@ -1501,7 +1499,7 @@ paths:
                 title: Unsupported Media Type
                 status: 415
                 detail: The server is refusing the request because the entity of the request is in a format not supported by the requested resource for the requested method.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: unsupported
         "429":
           description: Too Many Requests
@@ -1517,7 +1515,7 @@ paths:
                 title: Too many request
                 status: 429
                 detail: The user has sent too many requests in a given amount of time (rate limiting).
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: tooManyRequests
         "500":
           description: Internal Server Error
@@ -1533,7 +1531,7 @@ paths:
                 title: Interne server fout.
                 status: 500
                 detail: The server encountered an unexpected condition which prevented it from fulfilling the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: serverError
         "501":
           description: Not Implemented
@@ -1549,7 +1547,7 @@ paths:
                 title: Not Implemented
                 status: 501
                 detail: The server does not support the functionality required to fulfill the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notImplemented
         "503":
           description: Service Unavailable
@@ -1565,7 +1563,7 @@ paths:
                 title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notAvailable
         default:
           description: Er is een onverwachte fout opgetreden
@@ -1594,22 +1592,22 @@ paths:
           example: afnameleider-abc123
       - name: edu-to
         in: query
-        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -1644,10 +1642,10 @@ paths:
                 title: Ten minste één parameter moet worden opgegeven.
                 status: 400
                 detail: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modification.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: paramsRequired
                 invalidParams:
-                - type: https://www.edustandaard.nl/amigo/api/validaties/integer
+                - type: https://www.edustandaard.nl/cevo/api/validaties/integer
                   name: score
                   code: integer
                   reason: Waarde is geen geldige integer.
@@ -1665,7 +1663,7 @@ paths:
                 title: Niet correct geauthenticeerd.
                 status: 401
                 detail: The request requires user authentication. The response MUST include a WWW-Authenticate header field (section 14.47) containing a challenge applicable to the requested resource.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: authentication
         "403":
           description: Forbidden
@@ -1681,7 +1679,7 @@ paths:
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
                 detail: "The server understood the request, but is refusing to fulfill it."
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: autorisation
         "404":
           description: Not Found
@@ -1697,7 +1695,7 @@ paths:
                 title: Opgevraagde resource bestaat niet.
                 status: 404
                 detail: The server has not found anything matching the Request-URI.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notFound
         "409":
           description: Conflict
@@ -1713,7 +1711,7 @@ paths:
                 title: Conflict
                 status: 409
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: conflict
         "410":
           description: Gone
@@ -1729,7 +1727,7 @@ paths:
                 title: Gone
                 status: 410
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: gone
         "415":
           description: Unsupported Media Type
@@ -1745,7 +1743,7 @@ paths:
                 title: Unsupported Media Type
                 status: 415
                 detail: The server is refusing the request because the entity of the request is in a format not supported by the requested resource for the requested method.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: unsupported
         "429":
           description: Too Many Requests
@@ -1761,7 +1759,7 @@ paths:
                 title: Too many request
                 status: 429
                 detail: The user has sent too many requests in a given amount of time (rate limiting).
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: tooManyRequests
         "500":
           description: Internal Server Error
@@ -1777,7 +1775,7 @@ paths:
                 title: Interne server fout.
                 status: 500
                 detail: The server encountered an unexpected condition which prevented it from fulfilling the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: serverError
         "501":
           description: Not Implemented
@@ -1793,7 +1791,7 @@ paths:
                 title: Not Implemented
                 status: 501
                 detail: The server does not support the functionality required to fulfill the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notImplemented
         "503":
           description: Service Unavailable
@@ -1809,7 +1807,7 @@ paths:
                 title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notAvailable
         default:
           description: Er is een onverwachte fout opgetreden
@@ -1858,22 +1856,22 @@ paths:
           example: examen-abc123
       - name: edu-to
         in: query
-        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -1910,10 +1908,10 @@ paths:
                 title: Ten minste één parameter moet worden opgegeven.
                 status: 400
                 detail: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modification.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: paramsRequired
                 invalidParams:
-                - type: https://www.edustandaard.nl/amigo/api/validaties/integer
+                - type: https://www.edustandaard.nl/cevo/api/validaties/integer
                   name: score
                   code: integer
                   reason: Waarde is geen geldige integer.
@@ -1931,7 +1929,7 @@ paths:
                 title: Niet correct geauthenticeerd.
                 status: 401
                 detail: The request requires user authentication. The response MUST include a WWW-Authenticate header field (section 14.47) containing a challenge applicable to the requested resource.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: authentication
         "403":
           description: Forbidden
@@ -1947,7 +1945,7 @@ paths:
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
                 detail: "The server understood the request, but is refusing to fulfill it."
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
           description: Conflict
@@ -1963,7 +1961,7 @@ paths:
                 title: Conflict
                 status: 409
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: conflict
         "410":
           description: Gone
@@ -1979,7 +1977,7 @@ paths:
                 title: Gone
                 status: 410
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: gone
         "415":
           description: Unsupported Media Type
@@ -1995,7 +1993,7 @@ paths:
                 title: Unsupported Media Type
                 status: 415
                 detail: The server is refusing the request because the entity of the request is in a format not supported by the requested resource for the requested method.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: unsupported
         "429":
           description: Too Many Requests
@@ -2011,7 +2009,7 @@ paths:
                 title: Too many request
                 status: 429
                 detail: The user has sent too many requests in a given amount of time (rate limiting).
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: tooManyRequests
         "500":
           description: Internal Server Error
@@ -2027,7 +2025,7 @@ paths:
                 title: Interne server fout.
                 status: 500
                 detail: The server encountered an unexpected condition which prevented it from fulfilling the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: serverError
         "501":
           description: Not Implemented
@@ -2043,7 +2041,7 @@ paths:
                 title: Not Implemented
                 status: 501
                 detail: The server does not support the functionality required to fulfill the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notImplemented
         "503":
           description: Service Unavailable
@@ -2059,7 +2057,7 @@ paths:
                 title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notAvailable
         default:
           description: Er is een onverwachte fout opgetreden
@@ -2088,22 +2086,22 @@ paths:
           example: corrector-abc123
       - name: edu-to
         in: query
-        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -2138,10 +2136,10 @@ paths:
                 title: Ten minste één parameter moet worden opgegeven.
                 status: 400
                 detail: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modification.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: paramsRequired
                 invalidParams:
-                - type: https://www.edustandaard.nl/amigo/api/validaties/integer
+                - type: https://www.edustandaard.nl/cevo/api/validaties/integer
                   name: score
                   code: integer
                   reason: Waarde is geen geldige integer.
@@ -2159,7 +2157,7 @@ paths:
                 title: Niet correct geauthenticeerd.
                 status: 401
                 detail: The request requires user authentication. The response MUST include a WWW-Authenticate header field (section 14.47) containing a challenge applicable to the requested resource.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: authentication
         "403":
           description: Forbidden
@@ -2175,7 +2173,7 @@ paths:
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
                 detail: "The server understood the request, but is refusing to fulfill it."
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: autorisation
         "404":
           description: Not Found
@@ -2191,7 +2189,7 @@ paths:
                 title: Opgevraagde resource bestaat niet.
                 status: 404
                 detail: The server has not found anything matching the Request-URI.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notFound
         "409":
           description: Conflict
@@ -2207,7 +2205,7 @@ paths:
                 title: Conflict
                 status: 409
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: conflict
         "410":
           description: Gone
@@ -2223,7 +2221,7 @@ paths:
                 title: Gone
                 status: 410
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: gone
         "415":
           description: Unsupported Media Type
@@ -2239,7 +2237,7 @@ paths:
                 title: Unsupported Media Type
                 status: 415
                 detail: The server is refusing the request because the entity of the request is in a format not supported by the requested resource for the requested method.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: unsupported
         "429":
           description: Too Many Requests
@@ -2255,7 +2253,7 @@ paths:
                 title: Too many request
                 status: 429
                 detail: The user has sent too many requests in a given amount of time (rate limiting).
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: tooManyRequests
         "500":
           description: Internal Server Error
@@ -2271,7 +2269,7 @@ paths:
                 title: Interne server fout.
                 status: 500
                 detail: The server encountered an unexpected condition which prevented it from fulfilling the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: serverError
         "501":
           description: Not Implemented
@@ -2287,7 +2285,7 @@ paths:
                 title: Not Implemented
                 status: 501
                 detail: The server does not support the functionality required to fulfill the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notImplemented
         "503":
           description: Service Unavailable
@@ -2303,7 +2301,7 @@ paths:
                 title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notAvailable
         default:
           description: Er is een onverwachte fout opgetreden
@@ -2333,22 +2331,22 @@ paths:
           example: "2022"
       - name: edu-to
         in: query
-        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -2385,10 +2383,10 @@ paths:
                 title: Ten minste één parameter moet worden opgegeven.
                 status: 400
                 detail: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modification.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: paramsRequired
                 invalidParams:
-                - type: https://www.edustandaard.nl/amigo/api/validaties/integer
+                - type: https://www.edustandaard.nl/cevo/api/validaties/integer
                   name: score
                   code: integer
                   reason: Waarde is geen geldige integer.
@@ -2406,7 +2404,7 @@ paths:
                 title: Niet correct geauthenticeerd.
                 status: 401
                 detail: The request requires user authentication. The response MUST include a WWW-Authenticate header field (section 14.47) containing a challenge applicable to the requested resource.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: authentication
         "403":
           description: Forbidden
@@ -2422,7 +2420,7 @@ paths:
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
                 detail: "The server understood the request, but is refusing to fulfill it."
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
           description: Conflict
@@ -2438,7 +2436,7 @@ paths:
                 title: Conflict
                 status: 409
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: conflict
         "410":
           description: Gone
@@ -2454,7 +2452,7 @@ paths:
                 title: Gone
                 status: 410
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: gone
         "415":
           description: Unsupported Media Type
@@ -2470,7 +2468,7 @@ paths:
                 title: Unsupported Media Type
                 status: 415
                 detail: The server is refusing the request because the entity of the request is in a format not supported by the requested resource for the requested method.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: unsupported
         "429":
           description: Too Many Requests
@@ -2486,7 +2484,7 @@ paths:
                 title: Too many request
                 status: 429
                 detail: The user has sent too many requests in a given amount of time (rate limiting).
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: tooManyRequests
         "500":
           description: Internal Server Error
@@ -2502,7 +2500,7 @@ paths:
                 title: Interne server fout.
                 status: 500
                 detail: The server encountered an unexpected condition which prevented it from fulfilling the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: serverError
         "501":
           description: Not Implemented
@@ -2518,7 +2516,7 @@ paths:
                 title: Not Implemented
                 status: 501
                 detail: The server does not support the functionality required to fulfill the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notImplemented
         "503":
           description: Service Unavailable
@@ -2534,7 +2532,7 @@ paths:
                 title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notAvailable
         default:
           description: Er is een onverwachte fout opgetreden
@@ -2563,22 +2561,22 @@ paths:
           example: examen-abc123
       - name: edu-to
         in: query
-        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -2613,10 +2611,10 @@ paths:
                 title: Ten minste één parameter moet worden opgegeven.
                 status: 400
                 detail: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modification.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: paramsRequired
                 invalidParams:
-                - type: https://www.edustandaard.nl/amigo/api/validaties/integer
+                - type: https://www.edustandaard.nl/cevo/api/validaties/integer
                   name: score
                   code: integer
                   reason: Waarde is geen geldige integer.
@@ -2634,7 +2632,7 @@ paths:
                 title: Niet correct geauthenticeerd.
                 status: 401
                 detail: The request requires user authentication. The response MUST include a WWW-Authenticate header field (section 14.47) containing a challenge applicable to the requested resource.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: authentication
         "403":
           description: Forbidden
@@ -2650,7 +2648,7 @@ paths:
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
                 detail: "The server understood the request, but is refusing to fulfill it."
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: autorisation
         "404":
           description: Not Found
@@ -2666,7 +2664,7 @@ paths:
                 title: Opgevraagde resource bestaat niet.
                 status: 404
                 detail: The server has not found anything matching the Request-URI.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notFound
         "409":
           description: Conflict
@@ -2682,7 +2680,7 @@ paths:
                 title: Conflict
                 status: 409
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: conflict
         "410":
           description: Gone
@@ -2698,7 +2696,7 @@ paths:
                 title: Gone
                 status: 410
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: gone
         "415":
           description: Unsupported Media Type
@@ -2714,7 +2712,7 @@ paths:
                 title: Unsupported Media Type
                 status: 415
                 detail: The server is refusing the request because the entity of the request is in a format not supported by the requested resource for the requested method.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: unsupported
         "429":
           description: Too Many Requests
@@ -2730,7 +2728,7 @@ paths:
                 title: Too many request
                 status: 429
                 detail: The user has sent too many requests in a given amount of time (rate limiting).
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: tooManyRequests
         "500":
           description: Internal Server Error
@@ -2746,7 +2744,7 @@ paths:
                 title: Interne server fout.
                 status: 500
                 detail: The server encountered an unexpected condition which prevented it from fulfilling the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: serverError
         "501":
           description: Not Implemented
@@ -2762,7 +2760,7 @@ paths:
                 title: Not Implemented
                 status: 501
                 detail: The server does not support the functionality required to fulfill the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notImplemented
         "503":
           description: Service Unavailable
@@ -2778,7 +2776,7 @@ paths:
                 title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notAvailable
         default:
           description: Er is een onverwachte fout opgetreden
@@ -2807,22 +2805,22 @@ paths:
           example: examen-abc1233
       - name: edu-to
         in: query
-        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -2859,10 +2857,10 @@ paths:
                 title: Ten minste één parameter moet worden opgegeven.
                 status: 400
                 detail: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modification.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: paramsRequired
                 invalidParams:
-                - type: https://www.edustandaard.nl/amigo/api/validaties/integer
+                - type: https://www.edustandaard.nl/cevo/api/validaties/integer
                   name: score
                   code: integer
                   reason: Waarde is geen geldige integer.
@@ -2880,7 +2878,7 @@ paths:
                 title: Niet correct geauthenticeerd.
                 status: 401
                 detail: The request requires user authentication. The response MUST include a WWW-Authenticate header field (section 14.47) containing a challenge applicable to the requested resource.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: authentication
         "403":
           description: Forbidden
@@ -2896,7 +2894,7 @@ paths:
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
                 detail: "The server understood the request, but is refusing to fulfill it."
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: autorisation
         "404":
           description: Not Found
@@ -2912,7 +2910,7 @@ paths:
                 title: Opgevraagde resource bestaat niet.
                 status: 404
                 detail: The server has not found anything matching the Request-URI.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notFound
         "409":
           description: Conflict
@@ -2928,7 +2926,7 @@ paths:
                 title: Conflict
                 status: 409
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: conflict
         "410":
           description: Gone
@@ -2944,7 +2942,7 @@ paths:
                 title: Gone
                 status: 410
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: gone
         "415":
           description: Unsupported Media Type
@@ -2960,7 +2958,7 @@ paths:
                 title: Unsupported Media Type
                 status: 415
                 detail: The server is refusing the request because the entity of the request is in a format not supported by the requested resource for the requested method.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: unsupported
         "429":
           description: Too Many Requests
@@ -2976,7 +2974,7 @@ paths:
                 title: Too many request
                 status: 429
                 detail: The user has sent too many requests in a given amount of time (rate limiting).
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: tooManyRequests
         "500":
           description: Internal Server Error
@@ -2992,7 +2990,7 @@ paths:
                 title: Interne server fout.
                 status: 500
                 detail: The server encountered an unexpected condition which prevented it from fulfilling the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: serverError
         "501":
           description: Not Implemented
@@ -3008,7 +3006,7 @@ paths:
                 title: Not Implemented
                 status: 501
                 detail: The server does not support the functionality required to fulfill the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notImplemented
         "503":
           description: Service Unavailable
@@ -3024,7 +3022,7 @@ paths:
                 title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notAvailable
         default:
           description: Er is een onverwachte fout opgetreden
@@ -3054,22 +3052,22 @@ paths:
           example: "2022"
       - name: edu-to
         in: query
-        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -3106,10 +3104,10 @@ paths:
                 title: Ten minste één parameter moet worden opgegeven.
                 status: 400
                 detail: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modification.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: paramsRequired
                 invalidParams:
-                - type: https://www.edustandaard.nl/amigo/api/validaties/integer
+                - type: https://www.edustandaard.nl/cevo/api/validaties/integer
                   name: score
                   code: integer
                   reason: Waarde is geen geldige integer.
@@ -3127,7 +3125,7 @@ paths:
                 title: Niet correct geauthenticeerd.
                 status: 401
                 detail: The request requires user authentication. The response MUST include a WWW-Authenticate header field (section 14.47) containing a challenge applicable to the requested resource.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: authentication
         "403":
           description: Forbidden
@@ -3143,7 +3141,7 @@ paths:
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
                 detail: "The server understood the request, but is refusing to fulfill it."
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
           description: Conflict
@@ -3159,7 +3157,7 @@ paths:
                 title: Conflict
                 status: 409
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: conflict
         "410":
           description: Gone
@@ -3175,7 +3173,7 @@ paths:
                 title: Gone
                 status: 410
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: gone
         "415":
           description: Unsupported Media Type
@@ -3191,7 +3189,7 @@ paths:
                 title: Unsupported Media Type
                 status: 415
                 detail: The server is refusing the request because the entity of the request is in a format not supported by the requested resource for the requested method.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: unsupported
         "429":
           description: Too Many Requests
@@ -3207,7 +3205,7 @@ paths:
                 title: Too many request
                 status: 429
                 detail: The user has sent too many requests in a given amount of time (rate limiting).
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: tooManyRequests
         "500":
           description: Internal Server Error
@@ -3223,7 +3221,7 @@ paths:
                 title: Interne server fout.
                 status: 500
                 detail: The server encountered an unexpected condition which prevented it from fulfilling the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: serverError
         "501":
           description: Not Implemented
@@ -3239,7 +3237,7 @@ paths:
                 title: Not Implemented
                 status: 501
                 detail: The server does not support the functionality required to fulfill the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notImplemented
         "503":
           description: Service Unavailable
@@ -3255,7 +3253,7 @@ paths:
                 title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notAvailable
         default:
           description: Er is een onverwachte fout opgetreden
@@ -3284,22 +3282,22 @@ paths:
           example: examenvariant-abc123
       - name: edu-to
         in: query
-        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -3334,10 +3332,10 @@ paths:
                 title: Ten minste één parameter moet worden opgegeven.
                 status: 400
                 detail: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modification.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: paramsRequired
                 invalidParams:
-                - type: https://www.edustandaard.nl/amigo/api/validaties/integer
+                - type: https://www.edustandaard.nl/cevo/api/validaties/integer
                   name: score
                   code: integer
                   reason: Waarde is geen geldige integer.
@@ -3355,7 +3353,7 @@ paths:
                 title: Niet correct geauthenticeerd.
                 status: 401
                 detail: The request requires user authentication. The response MUST include a WWW-Authenticate header field (section 14.47) containing a challenge applicable to the requested resource.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: authentication
         "403":
           description: Forbidden
@@ -3371,7 +3369,7 @@ paths:
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
                 detail: "The server understood the request, but is refusing to fulfill it."
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: autorisation
         "404":
           description: Not Found
@@ -3387,7 +3385,7 @@ paths:
                 title: Opgevraagde resource bestaat niet.
                 status: 404
                 detail: The server has not found anything matching the Request-URI.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notFound
         "409":
           description: Conflict
@@ -3403,7 +3401,7 @@ paths:
                 title: Conflict
                 status: 409
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: conflict
         "410":
           description: Gone
@@ -3419,7 +3417,7 @@ paths:
                 title: Gone
                 status: 410
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: gone
         "415":
           description: Unsupported Media Type
@@ -3435,7 +3433,7 @@ paths:
                 title: Unsupported Media Type
                 status: 415
                 detail: The server is refusing the request because the entity of the request is in a format not supported by the requested resource for the requested method.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: unsupported
         "429":
           description: Too Many Requests
@@ -3451,7 +3449,7 @@ paths:
                 title: Too many request
                 status: 429
                 detail: The user has sent too many requests in a given amount of time (rate limiting).
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: tooManyRequests
         "500":
           description: Internal Server Error
@@ -3467,7 +3465,7 @@ paths:
                 title: Interne server fout.
                 status: 500
                 detail: The server encountered an unexpected condition which prevented it from fulfilling the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: serverError
         "501":
           description: Not Implemented
@@ -3483,7 +3481,7 @@ paths:
                 title: Not Implemented
                 status: 501
                 detail: The server does not support the functionality required to fulfill the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notImplemented
         "503":
           description: Service Unavailable
@@ -3499,7 +3497,7 @@ paths:
                 title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notAvailable
         default:
           description: Er is een onverwachte fout opgetreden
@@ -3539,22 +3537,22 @@ paths:
           example: "00"
       - name: edu-to
         in: query
-        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -3591,10 +3589,10 @@ paths:
                 title: Ten minste één parameter moet worden opgegeven.
                 status: 400
                 detail: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modification.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: paramsRequired
                 invalidParams:
-                - type: https://www.edustandaard.nl/amigo/api/validaties/integer
+                - type: https://www.edustandaard.nl/cevo/api/validaties/integer
                   name: score
                   code: integer
                   reason: Waarde is geen geldige integer.
@@ -3612,7 +3610,7 @@ paths:
                 title: Niet correct geauthenticeerd.
                 status: 401
                 detail: The request requires user authentication. The response MUST include a WWW-Authenticate header field (section 14.47) containing a challenge applicable to the requested resource.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: authentication
         "403":
           description: Forbidden
@@ -3628,7 +3626,7 @@ paths:
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
                 detail: "The server understood the request, but is refusing to fulfill it."
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
           description: Conflict
@@ -3644,7 +3642,7 @@ paths:
                 title: Conflict
                 status: 409
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: conflict
         "410":
           description: Gone
@@ -3660,7 +3658,7 @@ paths:
                 title: Gone
                 status: 410
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: gone
         "415":
           description: Unsupported Media Type
@@ -3676,7 +3674,7 @@ paths:
                 title: Unsupported Media Type
                 status: 415
                 detail: The server is refusing the request because the entity of the request is in a format not supported by the requested resource for the requested method.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: unsupported
         "429":
           description: Too Many Requests
@@ -3692,7 +3690,7 @@ paths:
                 title: Too many request
                 status: 429
                 detail: The user has sent too many requests in a given amount of time (rate limiting).
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: tooManyRequests
         "500":
           description: Internal Server Error
@@ -3708,7 +3706,7 @@ paths:
                 title: Interne server fout.
                 status: 500
                 detail: The server encountered an unexpected condition which prevented it from fulfilling the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: serverError
         "501":
           description: Not Implemented
@@ -3724,7 +3722,7 @@ paths:
                 title: Not Implemented
                 status: 501
                 detail: The server does not support the functionality required to fulfill the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notImplemented
         "503":
           description: Service Unavailable
@@ -3740,7 +3738,7 @@ paths:
                 title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notAvailable
         default:
           description: Er is een onverwachte fout opgetreden
@@ -3769,22 +3767,22 @@ paths:
           example: faoserver-abc123
       - name: edu-to
         in: query
-        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -3819,10 +3817,10 @@ paths:
                 title: Ten minste één parameter moet worden opgegeven.
                 status: 400
                 detail: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modification.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: paramsRequired
                 invalidParams:
-                - type: https://www.edustandaard.nl/amigo/api/validaties/integer
+                - type: https://www.edustandaard.nl/cevo/api/validaties/integer
                   name: score
                   code: integer
                   reason: Waarde is geen geldige integer.
@@ -3840,7 +3838,7 @@ paths:
                 title: Niet correct geauthenticeerd.
                 status: 401
                 detail: The request requires user authentication. The response MUST include a WWW-Authenticate header field (section 14.47) containing a challenge applicable to the requested resource.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: authentication
         "403":
           description: Forbidden
@@ -3856,7 +3854,7 @@ paths:
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
                 detail: "The server understood the request, but is refusing to fulfill it."
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: autorisation
         "404":
           description: Not Found
@@ -3872,7 +3870,7 @@ paths:
                 title: Opgevraagde resource bestaat niet.
                 status: 404
                 detail: The server has not found anything matching the Request-URI.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notFound
         "409":
           description: Conflict
@@ -3888,7 +3886,7 @@ paths:
                 title: Conflict
                 status: 409
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: conflict
         "410":
           description: Gone
@@ -3904,7 +3902,7 @@ paths:
                 title: Gone
                 status: 410
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: gone
         "415":
           description: Unsupported Media Type
@@ -3920,7 +3918,7 @@ paths:
                 title: Unsupported Media Type
                 status: 415
                 detail: The server is refusing the request because the entity of the request is in a format not supported by the requested resource for the requested method.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: unsupported
         "429":
           description: Too Many Requests
@@ -3936,7 +3934,7 @@ paths:
                 title: Too many request
                 status: 429
                 detail: The user has sent too many requests in a given amount of time (rate limiting).
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: tooManyRequests
         "500":
           description: Internal Server Error
@@ -3952,7 +3950,7 @@ paths:
                 title: Interne server fout.
                 status: 500
                 detail: The server encountered an unexpected condition which prevented it from fulfilling the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: serverError
         "501":
           description: Not Implemented
@@ -3968,7 +3966,7 @@ paths:
                 title: Not Implemented
                 status: 501
                 detail: The server does not support the functionality required to fulfill the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notImplemented
         "503":
           description: Service Unavailable
@@ -3984,7 +3982,7 @@ paths:
                 title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notAvailable
         default:
           description: Er is een onverwachte fout opgetreden
@@ -4044,22 +4042,22 @@ paths:
           example: "00"
       - name: edu-to
         in: query
-        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het verzoekbericht ontvangt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00000
       - name: edu-from
         in: query
-        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht verzendt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: 0000000700011BB00530
       responses:
@@ -4096,10 +4094,10 @@ paths:
                 title: Ten minste één parameter moet worden opgegeven.
                 status: 400
                 detail: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modification.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: paramsRequired
                 invalidParams:
-                - type: https://www.edustandaard.nl/amigo/api/validaties/integer
+                - type: https://www.edustandaard.nl/cevo/api/validaties/integer
                   name: score
                   code: integer
                   reason: Waarde is geen geldige integer.
@@ -4117,7 +4115,7 @@ paths:
                 title: Niet correct geauthenticeerd.
                 status: 401
                 detail: The request requires user authentication. The response MUST include a WWW-Authenticate header field (section 14.47) containing a challenge applicable to the requested resource.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: authentication
         "403":
           description: Forbidden
@@ -4133,7 +4131,7 @@ paths:
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
                 detail: "The server understood the request, but is refusing to fulfill it."
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
           description: Conflict
@@ -4149,7 +4147,7 @@ paths:
                 title: Conflict
                 status: 409
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: conflict
         "410":
           description: Gone
@@ -4165,7 +4163,7 @@ paths:
                 title: Gone
                 status: 410
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: gone
         "415":
           description: Unsupported Media Type
@@ -4181,7 +4179,7 @@ paths:
                 title: Unsupported Media Type
                 status: 415
                 detail: The server is refusing the request because the entity of the request is in a format not supported by the requested resource for the requested method.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: unsupported
         "429":
           description: Too Many Requests
@@ -4197,7 +4195,7 @@ paths:
                 title: Too many request
                 status: 429
                 detail: The user has sent too many requests in a given amount of time (rate limiting).
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: tooManyRequests
         "500":
           description: Internal Server Error
@@ -4213,7 +4211,7 @@ paths:
                 title: Interne server fout.
                 status: 500
                 detail: The server encountered an unexpected condition which prevented it from fulfilling the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: serverError
         "501":
           description: Not Implemented
@@ -4229,7 +4227,7 @@ paths:
                 title: Not Implemented
                 status: 501
                 detail: The server does not support the functionality required to fulfill the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notImplemented
         "503":
           description: Service Unavailable
@@ -4245,7 +4243,7 @@ paths:
                 title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notAvailable
         default:
           description: Er is een onverwachte fout opgetreden
@@ -4285,24 +4283,24 @@ paths:
           example: "00"
       - name: edu-to
         in: query
-        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht ontvangt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke school het LAS het bericht ontvangt. De waarde is het School OIN (het routeringskenmerk voor de administratie).</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
           example: "00000007000118900534"
       - name: edu-from
         in: query
-        description: "<body><p>Dit geeft aan namens welke organisatie Facet het bericht verzendt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met alleen cijfers en letters.</p></body>"
+        description: "<body><p>Dit geeft aan namens welke organisatie Facet het bericht verzendt. De waarde is het OIN van de school.</p></body><body><p>Deze parameter is verplicht volgens het Edukoppeling REST/SaaS-profiel.</p></body><body><p>De waarde is code van 20 karakters, met achtereenvolgens 8 cijfers, 9 cijfers en/of letters en 3 cijfers.</p></body>"
         required: true
         style: form
         explode: true
         schema:
-          pattern: "^(\\\\d|\\\\D){20}$"
+          pattern: "^\\d{8}[0-9a-zA-Z]{9}\\d{3}$"
           type: string
-          example: 481057013760
+        example: 0000000700011BB00000
       requestBody:
         content:
           application/json:
@@ -4350,10 +4348,10 @@ paths:
                 title: Ten minste één parameter moet worden opgegeven.
                 status: 400
                 detail: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modification.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: paramsRequired
                 invalidParams:
-                - type: https://www.edustandaard.nl/amigo/api/validaties/integer
+                - type: https://www.edustandaard.nl/cevo/api/validaties/integer
                   name: score
                   code: integer
                   reason: Waarde is geen geldige integer.
@@ -4371,7 +4369,7 @@ paths:
                 title: Niet correct geauthenticeerd.
                 status: 401
                 detail: The request requires user authentication. The response MUST include a WWW-Authenticate header field (section 14.47) containing a challenge applicable to the requested resource.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: authentication
         "403":
           description: Forbidden
@@ -4387,7 +4385,7 @@ paths:
                 title: U bent niet geautoriseerd voor deze operatie.
                 status: 403
                 detail: "The server understood the request, but is refusing to fulfill it."
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: autorisation
         "409":
           description: Conflict
@@ -4403,7 +4401,7 @@ paths:
                 title: Conflict
                 status: 409
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: conflict
         "410":
           description: Gone
@@ -4419,7 +4417,7 @@ paths:
                 title: Gone
                 status: 410
                 detail: The request could not be completed due to a conflict with the current state of the resource
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: gone
         "415":
           description: Unsupported Media Type
@@ -4435,7 +4433,7 @@ paths:
                 title: Unsupported Media Type
                 status: 415
                 detail: The server is refusing the request because the entity of the request is in a format not supported by the requested resource for the requested method.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: unsupported
         "429":
           description: Too Many Requests
@@ -4451,7 +4449,7 @@ paths:
                 title: Too many request
                 status: 429
                 detail: The user has sent too many requests in a given amount of time (rate limiting).
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: tooManyRequests
         "500":
           description: Internal Server Error
@@ -4467,7 +4465,7 @@ paths:
                 title: Interne server fout.
                 status: 500
                 detail: The server encountered an unexpected condition which prevented it from fulfilling the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: serverError
         "501":
           description: Not Implemented
@@ -4483,7 +4481,7 @@ paths:
                 title: Not Implemented
                 status: 501
                 detail: The server does not support the functionality required to fulfill the request.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notImplemented
         "503":
           description: Service Unavailable
@@ -4499,7 +4497,7 @@ paths:
                 title: "Bronservice {bron} is tijdelijk niet beschikbaar."
                 status: 503
                 detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
-                instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+                instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
                 code: notAvailable
         default:
           description: Er is een onverwachte fout opgetreden
@@ -4646,7 +4644,6 @@ components:
       - correctieronden
       - dos
       - examentype
-      - fallback
       - id
       - mutatiemoment
       - naam
@@ -4709,6 +4706,15 @@ components:
           description: <body><p>Omschrijving van het examen.</p></body>
           nullable: true
           example: Omschrijving01
+        rijksdelen:
+          title: rijksdelen
+          type: array
+          description: <body><p>De rijksdelen waarvoor het examen geschikt is.</p></body><body><p>Waarde is lijst van een strings van 3 karakters volgens ISO_3166-1_alpha-3.</p></body>
+          items:
+            type: string
+            maxLength: 3
+            minLength: 3
+            example: "NLD"
         spellingscontrole:
           title: spellingscontrole
           type: boolean
@@ -4716,12 +4722,6 @@ components:
           example: true
         status:
           $ref: '#/components/schemas/ExamenStatustype'
-        url:
-          title: url
-          type: string
-          description: <body><p>Url naar verdere informatie over het examen.</p></body>
-          format: uri
-          nullable: true
         vakken:
           title: vakken
           minItems: 1
@@ -4776,12 +4776,6 @@ components:
           type: string
           description: <body><p>Omschrijving/naam van examenvariant.</p></body>
           example: Variantomschrijving01
-        url:
-          title: url
-          type: string
-          description: <body><p>Url naar verdere informatie over de examenvariant.</p></body>
-          format: uri
-          nullable: true
         variantcode:
           title: variantcode
           minLength: 1
@@ -4881,6 +4875,8 @@ components:
       - isafnamevan
       type: object
       properties:
+        afnamestatus:
+          $ref: '#/components/schemas/Afnamestatustype'
         afnametijdstip:
           title: afnametijdstip
           type: string
@@ -4942,7 +4938,7 @@ components:
       - afnameperiodeEind
       - duurAfname
       - examenregime
-      - inplanbaar
+      - inplanbaarVanaf
       type: object
       properties:
         afnameperiodeBegin:
@@ -4982,10 +4978,12 @@ components:
           description: "<body><p>De lijst van hulpmiddelen die individueel toegestaan zijn voor het examen. Er zijn afspraken gemaakt over de verschillende waarden die gebruikt zullen worden en dit is vastgelegd in de enumeratie HulpmiddelenSoort. Deze enumeratie is niet bindend, d.w.z. kan in overleg worden aangepast.</p></body>"
           items:
             type: string
-        inplanbaar:
-          title: inplanbaar
-          type: boolean
-          description: <body><p>Of het examen wel of niet inplanbaar is.</p></body>
+        inplanbaarVanaf:
+          title: inplanbaarVanaf
+          type: string
+          format: date
+          description: <body><p>Datum vanaf wanneer het examen inplanbaar is.</p></body><body><p>De datum wordt uniek uitgedrukt in jaartal, maand en dag volgens ISO 8601, bijvoorbeeld 2026-01-05.</p></body>"
+          example: "2026-01-05"
         standaardHulpmiddelen:
           title: standaardHulpmiddelen
           minItems: 0
@@ -5049,7 +5047,7 @@ components:
         geboortedatum:
           title: geboortedatum
           type: string
-          description: "<body><p>De geboortedatum van de examenkandidaat.</p></body><body><p>Een datum uitgedrukt jaartal, maand en dag volgens ISO 8601, bijvoorbeeld 2021-03-22.</p></body>"
+          description: "<body><p>De geboortedatum van de examenkandidaat.</p></body><body><p>Een datum uitgedrukt in jaartal, maand en dag volgens ISO 8601, bijvoorbeeld 2021-03-22.</p></body>"
           format: date
           example: 2001-03-22
         gebruikersnaam:
@@ -5243,6 +5241,15 @@ components:
       enum:
       - Online
       - Offline
+    Afnamestatustype:
+      type: string
+      description: <body><p>Waardelijst voor afnamestatus bij de resultaten.</p></body>
+      enum:
+      - AFGEBROKEN
+      - VERWIJDERD
+      - CORRECTIE_GESLOTEN
+      - NIET_GESTART
+      - GESLOTEN
     CEVOResultaattype:
       type: string
       description: <body><p>Waardelijst voor duiding van het type resultaat.</p></body>
@@ -5357,7 +5364,7 @@ components:
           type: string
           format: uri
           nullable: true
-          example: "https://www.edustandaard.nl/amigo/api/{major-versie}/validaties/integer"
+          example: "https://www.edustandaard.nl/cevo/api/{major-versie}/validaties/integer"
         name:
           type: string
           description: Naam van de parameter
@@ -5390,10 +5397,10 @@ components:
             title: Ten minste één parameter moet worden opgegeven.
             status: 400
             detail: The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modification.
-            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
             code: paramsRequired
             invalidParams:
-            - type: https://www.edustandaard.nl/amigo/api/validaties/integer
+            - type: https://www.edustandaard.nl/cevo/api/validaties/integer
               name: score
               code: integer
               reason: Waarde is geen geldige integer.
@@ -5411,7 +5418,7 @@ components:
             title: Niet correct geauthenticeerd.
             status: 401
             detail: The request requires user authentication. The response MUST include a WWW-Authenticate header field (section 14.47) containing a challenge applicable to the requested resource.
-            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
             code: authentication
     "403":
       description: Forbidden
@@ -5427,7 +5434,7 @@ components:
             title: U bent niet geautoriseerd voor deze operatie.
             status: 403
             detail: "The server understood the request, but is refusing to fulfill it."
-            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
             code: autorisation
     "409":
       description: Conflict
@@ -5443,7 +5450,7 @@ components:
             title: Conflict
             status: 409
             detail: The request could not be completed due to a conflict with the current state of the resource
-            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
             code: conflict
     "410":
       description: Gone
@@ -5459,7 +5466,7 @@ components:
             title: Gone
             status: 410
             detail: The request could not be completed due to a conflict with the current state of the resource
-            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
             code: gone
     "415":
       description: Unsupported Media Type
@@ -5475,7 +5482,7 @@ components:
             title: Unsupported Media Type
             status: 415
             detail: The server is refusing the request because the entity of the request is in a format not supported by the requested resource for the requested method.
-            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
             code: unsupported
     "429":
       description: Too Many Requests
@@ -5491,7 +5498,7 @@ components:
             title: Too many request
             status: 429
             detail: The user has sent too many requests in a given amount of time (rate limiting).
-            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
             code: tooManyRequests
     "500":
       description: Internal Server Error
@@ -5507,7 +5514,7 @@ components:
             title: Interne server fout.
             status: 500
             detail: The server encountered an unexpected condition which prevented it from fulfilling the request.
-            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
             code: serverError
     "501":
       description: Not Implemented
@@ -5523,7 +5530,7 @@ components:
             title: Not Implemented
             status: 501
             detail: The server does not support the functionality required to fulfill the request.
-            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
             code: notImplemented
     "503":
       description: Service Unavailable
@@ -5539,7 +5546,7 @@ components:
             title: "Bronservice {bron} is tijdelijk niet beschikbaar."
             status: 503
             detail: The service is currently unable to handle the request due to a temporary overloading or maintenance of the server.
-            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
             code: notAvailable
     default:
       description: Er is een onverwachte fout opgetreden
@@ -5564,7 +5571,7 @@ components:
             title: Opgevraagde resource bestaat niet.
             status: 404
             detail: The server has not found anything matching the Request-URI.
-            instance: https://datapunt.voorbeeldschool.nl/api/v1/resourcenaam?parameter=waarde
+            instance: https://datapunt.voorbeeldschool.nl/api/v4/resourcenaam?parameter=waarde
             code: notFound
     "204":
       description: No content
@@ -5579,7 +5586,7 @@ components:
         type: string
         description: Geeft een specifieke API-versie aan in de context van een specifieke aanroep.
         nullable: true
-        example: 1.0.0
+        example: 04.01.01
     warning:
       style: simple
       explode: false
